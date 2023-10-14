@@ -85,11 +85,7 @@ To run the model, connect your Android phone to this computer, enable `Developer
 
  The `decoder_uv` model will then be executed on the smartphone on some random inputs created by the script.
 
-## License
 
-  Source code uses [Apache License 2.0](https://github.com/SmartHarmony/JPEG-AI-OPT/blob/main/LICENSE)
-  
-  Other materials uses [Creative Commons Attribution (CC BY 4.0)](http://creativecommons.org/licenses/by/4.0/)
 
 
 
