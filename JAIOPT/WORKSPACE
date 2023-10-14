@@ -1,0 +1,68 @@
+workspace(name = "deepvan")
+
+load("//:deps.bzl", "tensorflow_deps")
+tensorflow_deps()
+
+# load tensorflow's own dependencies
+load("@org_tensorflow//tensorflow:workspace3.bzl", "tf_workspace3")
+
+tf_workspace3()
+
+load("@org_tensorflow//tensorflow:workspace2.bzl", "tf_workspace2")
+
+tf_workspace2()
+
+load("@org_tensorflow//tensorflow:workspace1.bzl", "tf_workspace1")
+
+tf_workspace1()
+
+load("@org_tensorflow//tensorflow:workspace0.bzl", "tf_workspace0")
+
+tf_workspace0()
+
+# deepvan's dependencies
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+load("//:deps.bzl", "bazel_related_deps")
+bazel_related_deps()
+
+load("//repo/opencl-kernel:opencl_kernel_configure.bzl", "encrypt_opencl_kernel_repository")
+encrypt_opencl_kernel_repository(name = "local_opencl_kernel_encrypt")
+
+load("//:deps.bzl", "protobuf_deps")
+protobuf_deps(__workspace_dir__)
+
+load("//:deps.bzl", "opencl_hdr_deps")
+opencl_hdr_deps()
+
+load("//:deps.bzl", "opencl_cpp_deps")
+opencl_cpp_deps()
+
+load("//:deps.bzl", "half_deps")
+half_deps(root = __workspace_dir__)
+
+load("//:deps.bzl", "eigen_deps")
+eigen_deps()
+
+load("//:deps.bzl", "tflite_deps")
+tflite_deps()
+
+load("//:deps.bzl", "six_deps")
+six_deps()
+
+load("//:deps.bzl", "gtest_deps")
+gtest_deps()
+
+# Set up Android NDK
+android_ndk_repository(
+    name = "androidndk",
+    # Android 5.0
+    api_level = 21,
+)
+
+# Set up default cross compilers for arm linux
+load("//:deps.bzl", "arm_linux_deps")
+arm_linux_deps()
+
+load("//:deps.bzl", "aarch64_deps")
+aarch64_deps()

@@ -1,0 +1,236 @@
+syntax = "proto2";
+
+package deepvan;
+
+option optimize_for = LITE_RUNTIME;
+
+// For better compatibility,
+// the deepvan.proto is refered from tensorflow and caffe2.
+
+enum DataType {
+  DT_INVALID = 0;
+  DT_INT8 = 1;
+  DT_UINT8 = 2;
+  DT_INT32 = 3;
+  DT_HALF = 4;
+  DT_FLOAT = 5;
+}
+
+enum MemoryType {
+  CPU_BUFFER = 0;
+  GPU_BUFFER = 1;
+  GPU_IMAGE = 2;
+}
+
+enum PatternStorageType {
+  PT_LOOSE = 0;
+  PT_TIGHT = 1;
+}
+
+enum PruningType {
+  DENSE = 0;
+  CSR = 1;
+  PATTERN = 2;
+  BLOCK = 3;
+  COLUMN = 4;
+  SLICE = 5;
+}
+
+enum ModelType {
+  DEFAULT = 0;
+  BERT = 1;
+}
+
+message TuningProto {
+  repeated uint32 lws = 1;
+  repeated uint32 gws = 2;
+}
+
+message PatternData {
+  optional PatternStorageType pst = 1 [default = PT_LOOSE];
+  //if output channel less than 256, choose order_data_byte 
+  repeated int32 order_data       = 2 [packed = true];
+  optional int32 order_size       = 3;
+  //if input channel less than 256, choose byte, 
+  //but number_data is better(save computation)
+  repeated int32 number_data      = 4 [packed = true];
+  optional int32 number_size      = 5;
+  
+  //using bool in CPU mode, but GPU don't support bool
+  repeated int32 style_data       = 6 [packed = true];
+  optional int32 style_size       = 7;
+  
+  //if input channel(pruned) less than 256, choose order_data_byte
+  repeated int32 gap_data         = 8 [packed = true];
+  optional int32 gap_size         = 9;
+  
+  //if input channel less than 256, choose order_data_byte
+  repeated int32 index_data       = 10[packed = true];
+  optional int32 index_size       = 11;
+  
+  repeated int32 pattern_shape    = 12;
+  optional int32 offset           = 13;
+  optional int32 data_size        = 14;
+}
+
+message ColumnData {
+  // for column pruning data
+  repeated int32 rows_mask = 1;
+  optional int32 rows_nnz = 2;
+  repeated int32 cols_mask = 3;
+  optional int32 cols_nnz = 4;
+  repeated int32 rows_zeros = 5;
+}
+
+message BlockData {
+  // for block pruning data
+  repeated int32 block_count = 1;
+  repeated int32 offset_data = 2;
+  repeated int32 order_data  = 3;
+  repeated int32 empty_data  = 4;
+  repeated int32 stride_data = 5;
+  repeated int32 column_data = 6;
+}
+
+message CSRData {
+  repeated int32 row_ptr = 1;
+  optional int32 row_size = 2;
+  optional int32 row_offset = 3;
+  repeated int32 col_ptr = 4;
+  optional int32 col_size = 5;
+  optional int32 col_offset = 6;
+  optional int32 conv_unroll = 7;
+}
+
+message SliceData {
+  repeated int32 order_data  = 1;
+  optional int32 order_size  = 2;
+  optional int32 order_offset  = 3;
+  repeated int32 offset_data = 4;
+  optional int32 offset_size = 5;
+  optional int32 offset_offset = 6;
+  repeated int32 index_data  = 7;
+  optional int32 index_size  = 8;
+  optional int32 index_offset  = 9;
+  repeated int64 buffer_shape = 10;
+  repeated int64 image_shape = 11;
+  
+  optional int32 is_pruned = 15;
+  optional int32 is_ordered = 16;
+}
+
+message TensorProto {
+  repeated int64 dims = 1;
+  optional DataType data_type = 2 [default = DT_FLOAT];
+  repeated float float_data = 3 [packed = true];
+  repeated int32 int32_data = 4 [packed = true];
+  optional string name = 5;
+  optional int64 offset = 6;
+  optional int64 data_size = 7;
+  optional float scale = 8;
+  optional int32 zero_point = 9;
+  optional float minval = 10;
+  optional float maxval = 11;
+  optional bool quantized = 12 [default = false];
+  
+  // for sparse weight
+  optional bool sparsed_weight = 13 [default = false];
+  repeated int32 row_ptr = 14 [packed = true];
+  optional int64 row_ptr_data_size = 15;
+  repeated int32 col_index = 16 [packed = true];
+  optional int64 col_index_data_size = 17;
+  optional bool ternary = 18 [default = false];
+  repeated uint32 style_data = 19;
+  
+  optional PruningType pruning_type = 20 [default = DENSE];
+
+  // for pattern pruning data  
+  optional PatternData pattern_data = 21;
+  optional bool pattern_weight = 22 [default = false];
+  
+  // for column pruning data
+  optional ColumnData column_data = 23;
+
+  // for csr pruning data
+  optional CSRData csr_data = 24;
+
+  // for slice pruning data
+  optional SliceData slice_data = 25;
+
+  optional uint32 node_id = 100;
+}
+
+message ArgumentProto {
+  optional string name = 1;
+  optional float f = 2;
+  optional int64 i = 3;
+  optional bytes s = 4;
+  repeated float floats = 5;
+  repeated int64 ints = 6;
+}
+
+// for hexagon 
+message NodeInput {
+  optional int32 node_id = 1;
+  optional int32 output_port = 2;
+}
+
+message OutputShape {
+  repeated int64 dims = 1;
+}
+
+message QuantizeActivationInfo {
+  optional float scale = 1;
+  optional int32 zero_point = 2;
+  optional float minval = 3;  // hexagon uses min/max
+  optional float maxval = 4;
+}
+
+message OperatorProto {
+  repeated string input = 1;
+  repeated string output = 2;
+  optional string name = 3;
+  optional string type = 4;
+  optional int32 device_type = 5;
+  repeated ArgumentProto arg = 6;
+  repeated OutputShape output_shape = 7;
+  repeated DataType output_type = 8;
+  repeated QuantizeActivationInfo quantize_info = 9;
+  repeated int32 mem_id = 10;
+  repeated uint32 ch_index = 13;  
+  optional PruningType pruning_type = 14 [default = DENSE];
+  optional int64 macs = 15;
+  optional TuningProto tuning_proto = 17;
+  optional ModelType model_type = 18 [default = DEFAULT];
+
+  // for hexagon 
+  optional uint32 node_id = 100;
+  optional uint32 op_id = 101;
+  optional uint32 padding = 102;
+  repeated NodeInput node_input = 103;
+  repeated int32 out_max_byte_size = 104;  // only support 32-bit len
+}
+
+// for hexagon 
+message InputOutputInfo {
+  optional string name = 1;
+  optional int32 node_id = 2;
+  repeated int32 dims = 3;
+  optional int32 max_byte_size = 4;  // only support 32-bit len
+  optional DataType data_type = 5 [default = DT_FLOAT];
+  optional int32 data_format = 6 [default = 1];  // NHWC
+  optional float scale = 7;
+  optional int32 zero_point = 8;
+  optional int32 skip_buffer_transform = 9;
+}
+
+message NetProto {
+  repeated OperatorProto op = 1;
+  repeated ArgumentProto arg = 2;
+  repeated TensorProto tensors = 3;
+  optional uint64 other_data_size = 4;
+
+  // for hexagon 
+  repeated InputOutputInfo input_info = 100;
+  repeated InputOutputInfo output_info = 101;
+}

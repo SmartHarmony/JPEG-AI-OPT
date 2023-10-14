@@ -1,0 +1,14 @@
+#ifndef _LIBMEMPROF_H_
+#define _LIBMEMPROF_H_
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+  ssize_t getCPUMemoryUsage(void) __attribute__((visibility("default")));
+  ssize_t getGPUMemoryUsage(void) __attribute__((visibility("default")));
+
+#ifdef __cplusplus
+};
+#endif
+
+#endif
