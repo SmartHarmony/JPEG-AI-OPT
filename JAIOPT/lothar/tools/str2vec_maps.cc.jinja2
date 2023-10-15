@@ -1,0 +1,21 @@
+// This is a generated file. DO NOT EDIT!
+
+#include <map>
+#include <string>
+#include <vector>
+
+namespace deepvan {
+extern const std::map<std::string, std::vector<{{data_type}}>> {{variable_name}} =
+{
+  {% for key, value in maps.items() %}
+  {
+    "{{key}}",
+    {
+      {%- for ele in value -%}
+      {{ele}},
+      {%- endfor -%}
+    }
+  },  // {{key}}
+{% endfor %}
+};
+}  // namespace deepvan

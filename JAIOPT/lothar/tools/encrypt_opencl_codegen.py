@@ -2,7 +2,7 @@ import argparse
 import os
 import shutil
 import sys
-
+import jinja2
 
 # python encrypt_opencl_codegen.py --cl_kernel_dir=./deepvan/backend/opencl/cl/  \
 #     --output_path=./deepvan/codegen/opencl_encrypt/opencl_encrypted_program.cc

@@ -73,10 +73,6 @@ class Transformer(base_converter.ConverterInterface):
                         break
             func_name = self._registered_transformers[key].__name__
             timer_wrapper(func_name, inner_transformer)
-        while True:
-            change = self.transform_transpose_reshape()
-            if not change:
-                break
 
         return self._model, {}
 
@@ -277,42 +273,6 @@ class Transformer(base_converter.ConverterInterface):
         else:
             CONDITIONS(False, "filter format %s not supported" % filter_format)
         return filter_height, filter_width, in_channels, out_channels
-
-    def transform_transpose_reshape(self):
-        if self._option.device != DeviceType.GPU.value \
-                or self._option.cl_mem_type != "image":
-            return False
-        net = self._model
-        transpose_reshape_key = "transpose_reshape"
-        for op in net.op:
-            if (op.type == DeepvanOp.Transpose.name and ConverterUtil.get_arg(op,
-                                                                              transpose_reshape_key) == None):
-                output_shape = op.output_shape[0].dims
-                for arg in op.arg:
-                    if arg.name == "dims":
-                        dims = arg.ints
-                if (len(output_shape) == 3 and (output_shape[0] == 1 or output_shape[1] == 1) and dims == [1, 0, 2]):
-                    print("Add transpose reshape 2 to: %s(%s)",
-                          (op.name, op.type))
-                    transpose_arg = op.arg.add()
-                    transpose_arg.name = transpose_reshape_key
-                    transpose_arg.i = 2  # reuse this argument
-                    continue
-            if (op.type == DeepvanOp.Reshape.name and ConverterUtil.get_arg(op,
-                                                                            transpose_reshape_key) == None):
-                if not self._consumers.get(op.output[0]):
-                    continue
-                consumer_op = self._consumers[op.output[0]][0]
-                if (consumer_op.type == DeepvanOp.Transpose.name):
-                    print("Add transpose reshape 1 to: %s(%s) and %s(%s)"
-                          % (op.name, op.type, consumer_op.name, consumer_op.type))
-                    transpose_arg = consumer_op.arg.add()
-                    transpose_arg.name = transpose_reshape_key
-                    transpose_arg.i = 1
-                    reshape_arg = op.arg.add()
-                    reshape_arg.name = transpose_reshape_key
-                    reshape_arg.i = 1
-                    return True
 
     def add_winograd_arg(self):
         if self._wino_arg == 0:

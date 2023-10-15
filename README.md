@@ -66,6 +66,8 @@ Enter the `JAIOPT` directory. To check whether your setup is in good shape, run 
 `bazel build --config android --config optimization //deepvan/executor:libexecutor_shared.so --config symbol_hidden --define neon=true --define openmp=true --define opencl=true --cpu=arm64-v8a`
 
 ## How to measure model performance
+Before measuring performance, build the `JAIOPT` framework by navigating to the `JAIOPT` directory and executing the `build.sh` script. Once `JAIOPT` has been successfully compiled, proceed with the following steps.
+
 Let us use the `decoder_uv` model as an example for performance measurement. Navigate to the `Verification_Models` directory to locate the `decoder_uv` model, and take note that there is a configuration file named `decoder_uv.yml` associated with this model.
 
 We need to perform the following two steps:                                                                     
@@ -74,7 +76,7 @@ We need to perform the following two steps:                  �
 
 Execute command `python3.7 TOOL_PATH/lothar/controller.py convert --config=path/to/your/config.yml --model_path=ONNX_PATH` to convert that ONNX to our internal computational graph.
 
-In the provided command line, replace `TOOL_PATH` with the root path of this toolkit, and `ONNX_PATH` with the path to your testing ONNX model. For the `config` option, use the predefined `decoder_uv.yml` file, which contains pre-defined parameters like model input/output shape, data type, and runtime. The template config.yml can be referred to [here](https://github.com/hustc12/jpeg-ai-release/blob/main/config.yml).
+In the provided command line, replace `TOOL_PATH` with the root path of `JAIOPT`, and `ONNX_PATH` with the path to your testing ONNX model (refer to the `Verification_Models` directory). For the `config` option, use the predefined `decoder_uv.yml` file, which contains pre-defined parameters like model input/output shape, data type, and runtime. The template config.yml can be referred to [here](https://github.com/hustc12/jpeg-ai-release/blob/main/config.yml).
 
 2. Run
   
@@ -85,6 +87,8 @@ To run the model, connect your Android phone to this computer, enable `Developer
 
  The `decoder_uv` model will then be executed on the smartphone on some random inputs created by the script.
 
+## License
+  [Apache License 2.0](https://github.com/hustc12/jaiopt-release/blob/main/LICENSE)
 
 
 
