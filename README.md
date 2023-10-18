@@ -38,13 +38,15 @@ Please adhere to the detailed instructions in the following sub-section for sett
   by changing the line `python_bin_path = "/usr/local/bin/python3.7"`
   You can see your Python path by run 
   `whereis python`
+  
+You can install the necessary Python libraries, `numpy` and `jinja2`, by running the command: `pip3 install numpy jinja2`.
 
 > In the following, whenever you see any importing error, you may need to install the missing package by running `pip install package_name`
 
-### 2. Install Boost lib
+### 2. Install the required build tools and packages
 On Linux, run:
 ```bash
-sudo apt-get install libboost-all-dev
+sudo apt-get install cmake gcc g++ libboost-all-dev
 ```
 
 ### 3. Android SDK/NDK setup
