@@ -67,6 +67,12 @@ Enter the `JAIOPT` directory. To check whether your setup is in good shape, run 
 
 `bazel build --config android --config optimization //deepvan/executor:libexecutor_shared.so --config symbol_hidden --define neon=true --define openmp=true --define opencl=true --cpu=arm64-v8a`
 
+> If you encounter the build error `error: invalid value 'c++17' in '-std=c++17'`, you could resolve them by updating the build options in the `.bazelrc` file located at the root of `JAIOPT`.
+
+> Change line 8: `build --cxxopt=-std=c++17` to `build --cxxopt=-std=c++1z`
+
+> Change line 9: `build --host_cxxopt=-std=c++17` to `build --host_cxxopt=-std=c++1z`
+
 ## How to measure model performance
 Before measuring performance, build the `JAIOPT` framework by navigating to the `JAIOPT` directory and executing the `build.sh` script. Once `JAIOPT` has been successfully compiled, proceed with the following steps.
 
