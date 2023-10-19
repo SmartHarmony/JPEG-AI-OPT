@@ -51,7 +51,7 @@ Please adhere to the detailed instructions in the following sub-section for sett
   You can see your Python path by run 
   `whereis python`
   
-You can install the necessary Python libraries, `numpy` and `jinja2`, by running the command: `pip3 install numpy jinja2`.
+You can install the necessary Python libraries by running the command: `pip install -r requirements.txt` under the `JAIOPT` directory.
 
 > In the following, whenever you see any importing error, you may need to install the missing package by running `pip install package_name`
 
