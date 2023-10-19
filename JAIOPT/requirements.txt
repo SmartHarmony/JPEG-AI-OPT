@@ -1,7 +1,6 @@
 jinja2 
 numpy
-pyyaml 
-pysqlite3 
+pyyaml  
 argparse 
 ipdb 
 termcolor 
