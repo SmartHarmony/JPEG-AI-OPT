@@ -96,7 +96,7 @@ We need to perform the following two steps:                  �
 
 Execute command `python3.7 TOOL_PATH/lothar/controller.py convert --config=path/to/your/config.yml --model_path=ONNX_PATH` to convert that ONNX to our internal computational graph.
 
-In the provided command line, replace `TOOL_PATH` with the root path of `JAIOPT`, and `ONNX_PATH` with the path to your testing ONNX model (refer to the `Verification_Models` directory). For the `config` option, use the predefined `decoder_uv.yml` file, which contains pre-defined parameters like model input/output shape, data type, and runtime. The template config.yml can be referred to [here](https://github.com/hustc12/jpeg-ai-release/blob/main/config.yml).
+In the provided command line, replace `TOOL_PATH` with the root path of `JAIOPT`, and `ONNX_PATH` with the path to your testing ONNX model (refer to the `Verification_Models` directory). For the `config` option, use the predefined `decoder_uv.yml` file, which contains pre-defined parameters like model input/output shape, data type, and runtime. The template config.yml can be referred to [here](https://github.com/SmartHarmony/JPEG-AI-OPT/blob/main/config.yml).
 
 2. Run
   
