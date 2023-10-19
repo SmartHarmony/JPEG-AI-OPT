@@ -1,6 +1,5 @@
 jinja2 
 numpy
-torch 
 pyyaml 
 pysqlite3 
 argparse 
