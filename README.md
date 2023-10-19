@@ -29,6 +29,18 @@ Table 1 provides performance comparisons of decoder models between our inference
 
 **Table 1. DECODER Performance Comparisons**
 
+## Supported Operator Types
+Table 2 displays the operator types that are supported and have been utilized in the verification models.
+
+| Operator Type   |
+|-----------------|
+| Activation      |
+| BufferTransform |
+| Conv2D          |
+| Deconv2D        |
+| Eltwise         |
+
+**Table 2. Supported Operator Types**
 
 ## Environment Setup
 Please adhere to the detailed instructions in the following sub-section for setting up the environment prior to conducting performance measurements.
