@@ -1204,33 +1204,7 @@ def parse_args():
     )
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers()
-    visualize = subparsers.add_parser(
-        "visualize",
-        parents=[all_type_parent_parser],
-        help='visualize deepvan model (file or code)'
-    )
 
-    plot = subparsers.add_parser(
-        "plot_benchmark",
-        parents=[all_type_parent_parser],
-        help='visualize deepvan model (file or code)'
-    )
-
-    plot.add_argument(
-        '--op_type',
-        type=str,
-        default="Conv2D",
-        help="Show which operation type")
-    plot.add_argument(
-        '--plot_type',
-        type=str,
-        default="layer_wise",
-        help="Show which plot type")
-    plot.add_argument(
-        '--count',
-        type=int,
-        default=1,
-        help="Show how many records")
     convert = subparsers.add_parser(
         'convert',
         parents=[all_type_parent_parser, convert_run_parent_parser],
@@ -1341,29 +1315,7 @@ def parse_args():
         "--benchmark_offline",
         action="store_true",
         help="benchmark model for detail information.")
-    benchmark = subparsers.add_parser(
-        'benchmark',
-        parents=[all_type_parent_parser, run_bm_parent_parser],
-        help='benchmark model for detail information')
-    # benchmark.set_defaults(func=tuning_model)
-    benchmark.add_argument(
-        "--perf",
-        action="store_true",
-        help="whether to use simpleperf to profile the running.")
-    benchmark.add_argument(
-        "--max_num_runs",
-        type=int,
-        default=100,
-        help="max number of runs.")
-    benchmark.add_argument(
-        "--max_seconds",
-        type=float,
-        default=10.0,
-        help="max number of seconds to run.")
-    benchmark.add_argument(
-        "--static_openmp",
-        action="store_true",
-        help="link openmp statically for NDK without libomp.so.")
+    
     return parser.parse_known_args()
 
 
