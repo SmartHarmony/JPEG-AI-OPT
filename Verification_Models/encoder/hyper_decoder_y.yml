@@ -1,7 +1,7 @@
-library_name: hyper_decoder_y_sim
+library_name: hyper_decoder_y
 target_abis: [arm64-v8a]
 models:
-  hyper_encoder:
+  hyper_decoder_y:
     platform: onnx
     model_file_path: /media/huzq85/2TB_Work/2-working/jaiopt-release/Verification_Models/encoder/hyper_decoder_y.onnx
     # model_file_path: /Users/guan/Documents/startup/cocogen-internal/models/vit_b_16_cut.onnx
