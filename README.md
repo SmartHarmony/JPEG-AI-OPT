@@ -58,7 +58,7 @@ You can install the necessary Python libraries by running the command: `pip inst
 ### 2. Install the required build tools and packages
 On Linux, run:
 ```bash
-sudo apt-get install cmake gcc g++ libboost-all-dev
+sudo apt-get install cmake gcc g++ libboost-all-dev libncurses5
 ```
 
 ### 3. Android SDK/NDK setup
@@ -111,21 +111,3 @@ To run the model, connect your Android phone to this computer, enable `Developer
   Source code uses [Apache License 2.0](https://github.com/SmartHarmony/JPEG-AI-OPT/blob/main/LICENSE)
 
   Other materials uses [Creative Commons Attribution (CC BY 4.0)](http://creativecommons.org/licenses/by/4.0/)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
