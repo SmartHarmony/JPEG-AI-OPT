@@ -5,6 +5,8 @@ JPEG-AI is a learning-based image coding standard, and it includes verification 
 
 It is essential to note that the ONNX models, as well as our inference framework found in this repository, are primarily intended for performance evaluation rather than end-to-end inference. Additionally, we provide performance comparisons between our framework and others. In summary, our inference framework demonstrates significant speed improvements, approximately 5.5-6.5 times faster than NNAPI and about 3 times faster than QNN (Qualcomm Neural Network).
 
+The backend in this repo was tested on Qualcomm Sanpdragon 8 only. It may not support other hardware well. 
+
 ## Structure of this Repo
 This repository comprises two directories: `JAIOPT`, which has our inference framework including compiler and inference engine, and `Verification_Models`, which contains the models discussed in the `Introduction`.
 
