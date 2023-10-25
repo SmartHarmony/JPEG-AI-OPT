@@ -31,7 +31,7 @@ Table 1 provides performance comparisons of decoder models between our inference
 
 **Table 1. DECODER Performance Comparisons**
 
-## Correctness Verification
+## Result Verification
 We conducted a comparison between the computed results of the exported (ONNX) models and the original PyTorch version on a pixel level, setting tolerance thresholds ranging from 0.5% to 1%. The results indicate that the exported ONNX models consistently yield accurate results when compared to the PyTorch version.
 
 Diagram 1 illustrates the verification procedure's underlying mechanism.
