@@ -56,67 +56,146 @@ Table 2 displays the operator types that are supported and have been utilized in
 ## Environment Setup
 Please adhere to the detailed instructions in the following sub-section for setting up the environment prior to conducting performance measurements.
 
-### 1. Python path setup
-  Update the python path to the path of your python3.7 (Python version later than 3.7 should work as well) in file repo/opencl-kernel/opencl_kernel_configure.bzl
-  by changing the line `python_bin_path = "/usr/local/bin/python3.7"`
-  You can see your Python path by run 
-  `whereis python`
+### 1. Install our Compiler Toolkit
+Firstly, you need to clone the compiler toolkit from our GitHub repository. 
+If you have already cloned this repository, the compilation toolkit should be in your possession. If not, please download it from this repository by the command:
+```bash
+git clone https://github.com/SmartHarmony/JPEG-AI-OPT
+```
+
+### 2. Set up Python path and libraries
+First, configure the Python path to align with your specific environment.
+> *Note*: This instruction uses `Python 3.7` as an example. However, Python versions later than 3.7 should also be compatible.  Make sure to use the path corresponding to the Python version you are working with.
+
+Enter `JAIOPT` and navigate to the `repo/opencl-kernel` directory. Open the file named `opencl_kernel_configure.bzl` and find line 40 in the file. It should look like this: 
+```
+python_bin_path = "/usr/local/bin/python3.7"
+```
+
+Replace `/usr/local/bin/python3.7` with the path to your `Python 3.7` installation.
+
+To find your Python path, run the following command in your terminal:
+  ```bash
+whereis python
+```
+
   
-You can install the necessary Python libraries by running the command: `pip install -r requirements.txt` under the `JAIOPT` directory.
+After configuring your custom Python path, the next step is to set up the required libraries. Return to the `JAIOPT` directory. There, you can install the necessary Python libraries by executing the following command:
+```bash
+pip install -r requirements.txt
+``` 
 
-> In the following, whenever you see any importing error, you may need to install the missing package by running `pip install package_name`
+> *Note:* Whenever you see any importing error, you may need to install the missing package by running
+> ```bash
+> pip install missing_package_name
+> ```
 
-### 2. Install the required build tools and packages
-On Linux, run:
+### 3. Install required build tools and packages
+On **Linux**, run:
 ```bash
 sudo apt-get install cmake gcc g++ libboost-all-dev libncurses5
 ```
+On **MacOS**, run:
+```bash
+brew install cmake gcc boost ncurses
+```
+For `MacOS` users, if Homebrew is not installed on your system, you can install it by the instructions on the [Homebrew website](https://brew.sh/). 
 
-### 3. Android SDK/NDK setup
-- Install Bazel (5.0.0) from [Bazel Documentation](https://docs.bazel.build/versions/master/install.html)
-- Download and install Android SDK. It can be downloaded either from [Android Studio](https://developer.android.com/studio) or from the Android SDK command line tool (https://developer.android.com/studio#command-tools).
-- Download [Android NDK](https://developer.android.com/ndk/downloads) version `r16b` or `r17c` (later versions may be supported but have not been tested)
-- Export the directory of Android SDK and Android NDK to the environment path
-  For instance, on Mac cshell, add the following into .cshrc (change the paths to yours), and on Linux, you can add corresponding paths to .bashrc.
-  `setenv ANDROID_SDK_HOME ~/Library/Android/sdk`
-  `setenv ANDROID_NDK_HOME ~/Programs/android-ndk-r17c`
-  `setenv PATH ~/Library/Android/sdk/tools:~/Library/Android/sdk/platform-tools:$PATH`
+### 4. Set up Android SDK/NDK
+- Install Bazel (5.0.0) from [Bazel Documentation](https://docs.bazel.build/versions/master/install.html).
+- Download and install Android SDK. It can be downloaded either from [Android Studio](https://developer.android.com/studio) or from the Android SDK [command line tool](https://developer.android.com/studio#command-tools).
+- Download [Android NDK](https://developer.android.com/ndk/downloads) version `r16b` or `r17c` (later versions may be supported but have not been tested).
+- Export the directory of Android SDK and Android NDK to the environment path.
+
+  If you are in `zsh` or `bash` environments, add the following lines to your `.bashrc` file:
+  ```bash
+  export ANDROID_SDK_HOME=~/path/to/Android/sdk
+  export ANDROID_NDK_HOME=~/path/to/android-ndk-r17c
+  export PATH=~/path/to/Android/sdk/tools:~/path/to/Android/sdk/platform-tools:$PATH
+  ```
+
+  If you are in `cshell` enviornments, add the following lines to your `.cshrc` file:
+  ```
+  setenv ANDROID_SDK_HOME ~/path/to/Android/sdk
+  setenv ANDROID_NDK_HOME ~/path/to/android-ndk-r17c
+  setenv PATH ~/path/to/Android/sdk/tools:~/path/to/Android/sdk/platform-tools:$PATH`
+  ```
   
-### 4. Install this Compiler Toolkit
-If you have already cloned this repository, the compilation toolkit should be in your possession. If not, please download it from this repository.
 
 ### 5. Check your setup
-Enter the `JAIOPT` directory. To check whether your setup is in good shape, run the following in the root directory of the toolkit.
+To verify that your setup is correctly configured, navigate to the `JAIOPT` folder and execute the following commands:
 
-`bazel build --config android --config optimization //deepvan/executor:libexecutor_shared.so --config symbol_hidden --define neon=true --define openmp=true --define opencl=true --cpu=arm64-v8a`
+```
+bazel build --config android --config optimization //deepvan/executor:libexecutor_shared.so --config symbol_hidden --define neon=true --define openmp=true --define opencl=true --cpu=arm64-v8a
+```
 
-> If you encounter the build error `error: invalid value 'c++17' in '-std=c++17'`, you could resolve them by updating the build options in the `.bazelrc` file located at the root of `JAIOPT`.
+>*Note:* In this step, if you encounter the build error:
+>```
+>  error: invalid value 'c++17' in '-std=c++17'
+>```
+> please proceed with the modifications outlined below:
+> - Navigate to the `JAIOPT` directory and open the `.bazelrc` file.
+> - Locate `lines 8` and `9`, which should appear as follows: 
+> ```
+>  build --cxxopt=-std=c++17
+>  build --host_cxxopt=-std=c++17
+> ```
+> - Update these lines to use the `C++1z` standard instead of `C++17`:
+>   
+>```
+>  build --cxxopt=-std=c++1z
+>  build --host_cxxopt=-std=c++1z
+> ```
 
-> Change line 8: `build --cxxopt=-std=c++17` to `build --cxxopt=-std=c++1z`
-
-> Change line 9: `build --host_cxxopt=-std=c++17` to `build --host_cxxopt=-std=c++1z`
 
 ## How to measure model performance
-Before measuring performance, build the `JAIOPT` framework by navigating to the `JAIOPT` directory and executing the `build.sh` script. Once `JAIOPT` has been successfully compiled, proceed with the following steps.
+In this part, we use `decoder_uv` model as an example for performance measurement.
 
-Let us use the `decoder_uv` model as an example for performance measurement. Navigate to the `Verification_Models` directory to locate the `decoder_uv` model, and take note that there is a configuration file named `decoder_uv.yml` associated with this model.
+### 1. Build JAIOPT framework
+
+Before measuring performance, build the `JAIOPT` framework. Navigate to the `JAIOPT` directory in your terminal and run the `build.sh` script to initiate the build process. This can be done by executing the command:
+```bash
+./build.sh
+```
+### 2. Configuration for model
+
+After compiling `JAIOPT` successfully, proceed with the configuration steps for the `decoder_uv` model:
+
+Navigate to the `Verification_Models/decoder` directory and find the `decoder_uv.yml` configuration file, which contains pre-defined parameters like model input/output shape, data type, and runtime. Update the `model_file_path` in this file to reflect the correct path by modifying `line 6` to:
+```
+ model_file_path: path/to/model/decoder_uv.onnx
+```
+>*Note:* This example is specific to the `decoder_uv` model. For a general `.yml` template, please refer to the [config.yml](https://github.com/SmartHarmony/JPEG-AI-OPT/blob/main/config.yml).
+
+### 3. Measure model performance
 
 We need to perform the following two steps:                                                                     
 
-1. Conversion
+### 3.1 Conversion
 
-Execute command `python3.7 TOOL_PATH/lothar/controller.py convert --config=path/to/your/config.yml --model_path=ONNX_PATH` to convert that ONNX to our internal computational graph.
+Execute command:
+```bash
+python3.7 path/to/JAIOPT/lothar/controller.py convert --config=path/to/decoder_uv.yml --model_path=path/to/decoder_uv.onnx
+```
+to convert that ONNX to our internal computational graph.
 
-In the provided command line, replace `TOOL_PATH` with the root path of `JAIOPT`, and `ONNX_PATH` with the path to your testing ONNX model (refer to the `Verification_Models` directory). For the `config` option, use the predefined `decoder_uv.yml` file, which contains pre-defined parameters like model input/output shape, data type, and runtime. The template config.yml can be referred to [here](https://github.com/SmartHarmony/JPEG-AI-OPT/blob/main/config.yml).
+>*Note:* In the given command, the `decoder_uv` model is used as a representative example. For testing with a different `ONNX` model, replace `decoder_uv` with the name of your target model and update the corresponding configuration `.yml` file accordingly. Refer to the contents of the `Verification_Models` directory for examples of model configurations.
 
-2. Run
+The result of conversion should be like:
+
+**Insert figures of conversion result here.**
+
+#### 3.2 Run
   
 To run the model, connect your Android phone to this computer, enable `Developer` mode, and turn on `USB Debugging` in the `Developer Options` within your phone's Settings. Afterward, run the following command in the root directory of this tool on your computer:
+```bash
+python3.7 path/to/JAIOPT/lothar/controller.py run --config=path/to/decoder_uv.yml --model_path=path/to/decoder_uv.onnx
+```
+>*Note:* In the given command, the `decoder_uv` model is used as a representative example. For testing with a different `ONNX` model, replace `decoder_uv` with the name of your target model and update the corresponding configuration `.yml` file accordingly. Refer to the contents of the `Verification_Models` directory for examples of model configurations.
 
-  `python3.7 TOOL_PATH/lothar/controller.py run --config=path/to/your/config.yml --model_path=ONNX_PATH`
- where TOOL_PATH and ONNX_PATH should be replaced as above.
+The `decoder_uv` model will then be executed on the smartphone on some random inputs created by the script. The running result should be like:
 
- The `decoder_uv` model will then be executed on the smartphone on some random inputs created by the script.
+**Insert figures of running result here.**
 
 ## License
   Source code uses [Apache License 2.0](https://github.com/SmartHarmony/JPEG-AI-OPT/blob/main/LICENSE)
