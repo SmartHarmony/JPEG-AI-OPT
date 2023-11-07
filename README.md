@@ -3,7 +3,7 @@
 ## Introduction
 `JPEG-AI` is a learning-based image coding standard, and it includes verification models as part of the standard. This repository aims to offer the verification models in ONNX format, along with our optimized backend support known as JAIOPT. These models consist of five pairs of **Deep Neural Network (DNN)** models used within the JPEG-AI framework, including `single_encode`, `hyper_encoder`, `hyper_decoder`, `hyper_scale_decoder`, and `single_decoder`. Each of these pairs includes two models, one for **luminance (_y)** and one for **chrominance (_uv)** encoding or decoding. The first four pairs of models are employed in the encoding phase, while the last three pairs are used in the decoding phase.  
 It is essential to note that the ONNX models, as well as our inference framework found in this repository, are primarily intended for performance evaluation rather than end-to-end inference. Additionally, we provide performance comparisons between our framework and others.  
-`In summary, our inference framework demonstrates significant speed improvements, approximately 5.5-6.5 times faster than NNAPI and about 3 times faster than QNN (Qualcomm Neural Network).`
+In summary, our inference framework demonstrates significant speed improvements, approximately `5.5-6.5` times faster than `NNAPI` and about `3` times faster than `QNN` (Qualcomm Neural Network).`
 
 The backend in this repo was tested on `Qualcomm Sanpdragon 8` device (Example: Samsung Galaxy S21+).  
 
@@ -99,15 +99,13 @@ cd ~/Documents/GitHub/demo/JPEG-AI-OPT/repo/
 python_bin_path = "/usr/local/bin/python3.7"
 ```
 
-Replace `/usr/local/bin/python3.7` with the path to your `Python 3.7` installation.  
-01_Locate_Python_Bin_Path  
-![01_Locate_Python_Bin_Path.jpg](/images/01_Locate_Python_Bin_Path.jpg)  
+Replace `/usr/local/bin/python3.7` with the path to your `Python 3.7` installation.   
 
 To find your Python path, run the following command in your terminal:  
 ```bash
 whereis python
 ```
-02_whereis_Python  
+Executing the above commands will display your Python path as shown in the following image:
 ![02_whereis_Python.jpg](/images/02_whereis_Python.jpg)  
   
 After configuring your custom Python path, the next step is to install the required libraries.  
@@ -118,10 +116,9 @@ cd ~/Documents/GitHub/demo/JPEG-AI-OPT/JAIOPT/
 There, you can install the necessary Python libraries by executing the following command:
 ```bash
 pip install -r requirements.txt
-```  
-03_Install_Python_Libraries
-![03_Install_Python_Libraries.jpg](/images/03_Install_Python_Libraries.jpg)  
-04_Install_Python_Libraries_Done  
+```
+
+After successful installation, the result should appear as follows: 
 ![04_Install_Python_Libraries_Done.jpg](/images/04_Install_Python_Libraries_Done.jpg)  
 > *Note:* Whenever you see any importing error, you may need to install the missing package by running
 > ```bash
@@ -133,9 +130,7 @@ On **Linux**, run:
 ```bash
 sudo apt-get install cmake gcc g++ libboost-all-dev libncurses5
 ```
-05_Install_Linux_Libraries
-![05_Install_Linux_Libraries.jpg](/images/05_Install_Linux_Libraries.jpg)  
-06_Install_Linux_Libraries_Done
+After successful installation, the result should appear as follows:  
 ![06_Install_Linux_Libraries_Done.jpg](/images/06_Install_Linux_Libraries_Done.jpg)  
 On **MacOS**, run:
 ```bash
@@ -154,30 +149,32 @@ For `MacOS` users, if Homebrew is not installed on your system, you can install 
   export ANDROID_SDK_HOME=~/path/to/Android/sdk
   export ANDROID_NDK_HOME=~/path/to/android-ndk-r17c
   export PATH=~/path/to/Android/sdk/tools:~/path/to/Android/sdk/platform-tools:$PATH
-  ```  
-  Here is our example  
-  ```bash
-  export ANDROID_SDK_HOME=/home/phoenix/Android/Sdk/
-  export ANDROID_NDK_HOME=/home/phoenix/Android/Sdk/ndk/20.1.5948944/
-  export PATH=/home/phoenix/Android/Sdk/tools:/home/phoenix/Android/Sdk/platform:$PATH
   ```
-  21_Configure_Android_Environment
-  ![21_Configure_Android_Environment.jpg](/images/21_Configure_Android_Environment.jpg)  
-  
-  ```bash
-  echo $ANDROID_SDK_HOME
-  echo $ANDROID_NDK_HOME
-  echo $PATH
-  ```
-  22_Verify_Android_Environment
-  ![22_Verify_Android_Environment.jpg](/images/22_Verify_Android_Environment.jpg)  
-
   If you are in `cshell` enviornments, add the following lines to your `.cshrc` file:
   ```
   setenv ANDROID_SDK_HOME ~/path/to/Android/sdk
   setenv ANDROID_NDK_HOME ~/path/to/android-ndk-r17c
   setenv PATH ~/path/to/Android/sdk/tools:~/path/to/Android/sdk/platform-tools:$PATH`
   ```
+
+  - Here is our more detailed example in `zsh` and `bash` enviornments:
+  > ```bash
+  > export ANDROID_SDK_HOME=/home/phoenix/Android/Sdk/
+  > export ANDROID_NDK_HOME=/home/phoenix/Android/Sdk/ndk/20.1.5948944/
+  > export PATH=/home/phoenix/Android/Sdk/tools:/home/phoenix/Android/Sdk/platform:$PATH
+  > ```    
+  
+ 
+  You can execute the following command to verify if the Android environment has been successfully exported:
+  ```bash
+  echo $ANDROID_SDK_HOME
+  echo $ANDROID_NDK_HOME
+  echo $PATH
+  ```
+  If you have successfully exported your Android environment variables, the output of the above commands should be as follows:
+  ![22_Verify_Android_Environment.jpg](/images/22_Verify_Android_Environment.jpg)  
+
+  
   
 
 ### 5. Check your setup
@@ -189,13 +186,7 @@ Execute the following commands:
 ```
 bazel build --config android --config optimization //deepvan/executor:libexecutor_shared.so --config symbol_hidden --define neon=true --define openmp=true --define opencl=true --cpu=arm64-v8a
 ```
-07_Check_Your_Setup
-![07_Check_Your_Setup.jpg](/images/07_Check_Your_Setup.jpg)  
-08_Check_Your_Setup_In_Progress
-![08_Check_Your_Setup_In_Progress.jpg](/images/08_Check_Your_Setup_In_Progress.jpg)  
-09_Check_Your_Setup_In_Progress
-![09_Check_Your_Setup_In_Progress.jpg](/images/09_Check_Your_Setup_In_Progress.jpg)  
-10_Check_Your_Setup_Done
+If the build is successful, the result will be similar to the image below: 
 ![10_Check_Your_Setup_Done.jpg](/images/10_Check_Your_Setup_Done.jpg)  
 
 >*Note:* In this step, if you encounter the build error:
@@ -230,9 +221,7 @@ Run the `build.sh` script to initiate the build process.
 ```bash
 ./build.sh
 ```
-11_Build_Framework
-![11_Build_Framework.jpg](/images/11_Build_Framework.jpg)  
-12_Build_Framework_Done
+If the build is successful, the result will be similar to the image below:
 ![12_Build_Framework_Done.jpg](/images/12_Build_Framework_Done.jpg)  
 
 ### 2. Configuration for model
@@ -248,13 +237,16 @@ Update the `model_file_path` in this file to reflect the correct path by modifyi
 ```
  model_file_path: path/to/model/decoder_uv.onnx
 ```
-Here is our example  
-```
-model_file_path: /home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.onnx
-```
-13_Update_Model_File_Path
-![13_Update_Model_File_Path.jpg](/images/13_Update_Model_File_Path.jpg)  
 >*Note:* This example is specific to the `decoder_uv` model. For a general `.yml` template, please refer to the [config.yml](https://github.com/SmartHarmony/JPEG-AI-OPT/blob/main/config.yml).
+
+Here is a more detailed example:
+> Our model path is:  
+> ```
+> model_file_path: /home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.onnx
+> ```
+> And the modification is like:
+> ![13_Update_Model_File_Path.jpg](/images/13_Update_Model_File_Path.jpg)  
+
 
 ### 3. Measure model performance  
 ### 3.1 Conversion  
@@ -263,20 +255,17 @@ Execute command to convert that ONNX to our internal computational graph.:
 ```bash
 python3.7 path/to/JAIOPT/lothar/controller.py convert --config=path/to/decoder_uv.yml --model_path=path/to/decoder_uv.onnx
 ```
-Here is our example  
-```
-python3.7 /home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/JAIOPT/lothar/controller.py convert --config=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.yml --model_path=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.onnx
-```
-14_Convert
-![14_Convert.jpg](/images/14_Convert.jpg)  
-15_Convert_In_Progress
-![15_Convert_In_Progress.jpg](/images/15_Convert_In_Progress.jpg)  
-
 >*Note:* In the given command, the `decoder_uv` model is used as a representative example. For testing with a different `ONNX` model, replace `decoder_uv` with the name of your target model and update the corresponding configuration `.yml` file accordingly. Refer to the contents of the `Verification_Models` directory for examples of model configurations.
 
-The result of conversion should be like:  
-16_Convert_Done
-![16_Convert_Done.jpg](/images/16_Convert_Done.jpg)  
+
+Here is a more detailed example:
+> ```
+> python3.7 /home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/JAIOPT/lothar/controller.py convert --config=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.yml --model_path=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.onnx
+> ```
+> The result of conversion should be like:  
+> ![16_Convert_Done.jpg](/images/16_Convert_Done.jpg)  
+
+
 
 #### 3.2 Run
   
@@ -284,21 +273,19 @@ To run the model, connect your Android phone to this computer, enable `Developer
 ```bash
 python3.7 path/to/JAIOPT/lothar/controller.py run --config=path/to/decoder_uv.yml --model_path=path/to/decoder_uv.onnx
 ```
-Here is our example  
-```
-python3.7 /home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/JAIOPT/lothar/controller.py run --config=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.yml --model_path=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.onnx
-```
-17_Run
-![17_Run.jpg](/images/17_Run.jpg)  
-18_Run_In_Progress
-![18_Run_In_Progress.jpg](/images/18_Run_In_Progress.jpg)  
 >*Note:* In the given command, the `decoder_uv` model is used as a representative example. For testing with a different `ONNX` model, replace `decoder_uv` with the name of your target model and update the corresponding configuration `.yml` file accordingly. Refer to the contents of the `Verification_Models` directory for examples of model configurations.
 
-The `decoder_uv` model will then be executed on the smartphone on some random inputs created by the script. The running result should be like:
-19_Run_Success
-![19_Run_Success.jpg](/images/19_Run_Successjpg.jpg)  
-20_Run_Success_More_Information
-![20_Run_Success_More_Information.jpg](/images/20_Run_Success_More_Information.jpg)  
+Here is a more detailed example: 
+> ```
+> python3.7 /home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/JAIOPT/lothar/controller.py run --config=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.yml --model_path=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.onnx
+> ```
+> The `decoder_uv` model will then be executed on the smartphone on some random inputs created by the script. The running result should be like:
+> ![19_Run_Success.jpg](/images/19_Run_Successjpg.jpg)  
+>
+> For more information:
+> ![20_Run_Success_More_Information.jpg](/images/20_Run_Success_More_Information.jpg)  
+
+  
 
 ## License
   Source code uses [Apache License 2.0](https://github.com/SmartHarmony/JPEG-AI-OPT/blob/main/LICENSE)
