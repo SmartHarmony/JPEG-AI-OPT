@@ -49,6 +49,8 @@ OnnxSupportedOps = [
     'Relu',
     'Sub',
     'Transpose',
+    'Tanh',
+    'Sigmoid'
 ]
 
 OnnxOpType = Enum('OnnxOpType',
@@ -320,6 +322,8 @@ class OnnxConverter(base_converter.ConverterInterface):
     activation_type = {
         OnnxOpType.Relu.name: ActivationType.RELU,
         OnnxOpType.LeakyRelu.name: ActivationType.LEAKYRELU,
+        OnnxOpType.Tanh.name: ActivationType.TANH,
+        OnnxOpType.Sigmoid.name: ActivationType.SIGMOID,
     }
 
     def __init__(self, option, src_model_file):
@@ -334,6 +338,8 @@ class OnnxConverter(base_converter.ConverterInterface):
             OnnxOpType.Relu.name: self.convert_activation,
             OnnxOpType.Sub.name: self.convert_eltwise,
             OnnxOpType.Transpose.name: self.convert_transpose,
+            OnnxOpType.Tanh.name: self.convert_activation,
+            OnnxOpType.Sigmoid.name: self.convert_activation,
         }
         self._option = option
         self._net_def = deepvan_pb2.NetProto()
