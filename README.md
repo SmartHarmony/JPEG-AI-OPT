@@ -158,6 +158,7 @@ For `MacOS` users, if Homebrew is not installed on your system, you can install 
   ```
 
   - Here is our more detailed example in `zsh` and `bash` enviornments:
+  > Enter the commands:
   > ```bash
   > export ANDROID_SDK_HOME=/home/phoenix/Android/Sdk/
   > export ANDROID_NDK_HOME=/home/phoenix/Android/Sdk/ndk/20.1.5948944/
@@ -259,6 +260,7 @@ python3.7 path/to/JAIOPT/lothar/controller.py convert --config=path/to/decoder_u
 
 
 Here is a more detailed example:
+> Enter the command:
 > ```
 > python3.7 /home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/JAIOPT/lothar/controller.py convert --config=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.yml --model_path=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.onnx
 > ```
@@ -275,7 +277,8 @@ python3.7 path/to/JAIOPT/lothar/controller.py run --config=path/to/decoder_uv.ym
 ```
 >*Note:* In the given command, the `decoder_uv` model is used as a representative example. For testing with a different `ONNX` model, replace `decoder_uv` with the name of your target model and update the corresponding configuration `.yml` file accordingly. Refer to the contents of the `Verification_Models` directory for examples of model configurations.
 
-Here is a more detailed example: 
+Here is a more detailed example:
+> Enter the command:
 > ```
 > python3.7 /home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/JAIOPT/lothar/controller.py run --config=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.yml --model_path=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.onnx
 > ```
