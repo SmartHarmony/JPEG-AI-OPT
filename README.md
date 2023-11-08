@@ -250,11 +250,14 @@ Here is a more detailed example:
 
 
 ### 3. Measure model performance  
-### 3.1 Conversion  
-
-Execute command to convert that ONNX to our internal computational graph.:  
+#### 3.1 Conversion  
+Navigate to your `JAIOPT` directory:  
+```
+cd ~/Documents/GitHub/demo/JPEG-AI-OPT/JAIOPT/
+```
+In your `JAIOPT` folder, make sure you can find a folder named `lothar`, then execute command to convert that ONNX to our internal computational graph:  
 ```bash
-python3.7 path/to/JAIOPT/lothar/controller.py convert --config=path/to/decoder_uv.yml --model_path=path/to/decoder_uv.onnx
+python3.7 lothar/controller.py convert --config=path/to/decoder_uv.yml --model_path=path/to/decoder_uv.onnx
 ```
 >*Note:* In the given command, the `decoder_uv` model is used as a representative example. For testing with a different `ONNX` model, replace `decoder_uv` with the name of your target model and update the corresponding configuration `.yml` file accordingly. Refer to the contents of the `Verification_Models` directory for examples of model configurations.
 
@@ -271,9 +274,16 @@ Here is a more detailed example:
 
 #### 3.2 Run
   
-To run the model, connect your Android phone to this computer, enable `Developer` mode, and turn on `USB Debugging` in the `Developer Options` within your phone's Settings. Afterward, run the following command in the root directory of this tool on your computer:
+To run the model, connect your Android phone to this computer, enable `Developer` mode, and turn on `USB Debugging` in the `Developer Options` within your phone's `Settings`. 
+
+Navigate to your `JAIOPT` directory:  
+```
+cd ~/Documents/GitHub/demo/JPEG-AI-OPT/JAIOPT/
+```
+
+In your `JAIOPT` folder, make sure you can find a folder named `lothar`, afterward, run the following command in the root directory of this tool on your computer:
 ```bash
-python3.7 path/to/JAIOPT/lothar/controller.py run --config=path/to/decoder_uv.yml --model_path=path/to/decoder_uv.onnx
+python3.7 lothar/controller.py run --config=path/to/decoder_uv.yml --model_path=path/to/decoder_uv.onnx
 ```
 >*Note:* In the given command, the `decoder_uv` model is used as a representative example. For testing with a different `ONNX` model, replace `decoder_uv` with the name of your target model and update the corresponding configuration `.yml` file accordingly. Refer to the contents of the `Verification_Models` directory for examples of model configurations.
 
