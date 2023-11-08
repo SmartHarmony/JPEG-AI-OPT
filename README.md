@@ -5,12 +5,12 @@
 It is essential to note that the ONNX models, as well as our inference framework found in this repository, are primarily intended for performance evaluation rather than end-to-end inference. Additionally, we provide performance comparisons between our framework and others.  
 In summary, our inference framework demonstrates significant speed improvements, approximately `5.5-6.5` times faster than `NNAPI` and about `3` times faster than `QNN` (Qualcomm Neural Network).`
 
-The backend in this repo was tested on `Qualcomm Sanpdragon 8` device (Example: Samsung Galaxy S21+).  
+The backend in this repo was tested on `Qualcomm Snapdragon 8` device (Example: Samsung Galaxy S21+).  
 
 ## Structure of this Repo
 This repository comprises two directories:  
 1. `JAIOPT`  
-Has our inference framework including compiler and inference engine  
+Has our inference framework including compiler and inference engine.  
 2. `Verification_Models`  
 Contains the models discussed in the `Introduction`.
 
@@ -90,7 +90,7 @@ cd JPEG-AI-OPT
 First, configure the Python path to align with your specific environment.
 > *Note*: This instruction uses `Python 3.7` as an example. However, Python versions later than 3.7 should also be compatible.  Make sure to use the path corresponding to the Python version you are working with.  
 
-Navigate to the `JPEG-AI-OPT/JAIOPT/repo/opencl-kernel` directory.
+Navigate to the `JPEG-AI-OPT/JAIOPT/repo/opencl-kernel` directory:
 ```bash
 cd ~/Documents/GitHub/demo/JPEG-AI-OPT/repo/
 ```
@@ -109,7 +109,7 @@ Executing the above commands will display your Python path as shown in the follo
 ![02_whereis_Python.jpg](/images/02_whereis_Python.jpg)  
   
 After configuring your custom Python path, the next step is to install the required libraries.  
-Navigate to the `JAIOPT` directory.  
+Navigate to the `JAIOPT` directory: 
 ```
 cd ~/Documents/GitHub/demo/JPEG-AI-OPT/JAIOPT/
 ```
@@ -179,7 +179,7 @@ For `MacOS` users, if Homebrew is not installed on your system, you can install 
   
 
 ### 5. Check your setup
-Navigate to the `JAIOPT` directory.  
+Navigate to the `JAIOPT` directory:  
 ```
 cd ~/Documents/GitHub/demo/JPEG-AI-OPT/JAIOPT/
 ```
@@ -210,15 +210,15 @@ If the build is successful, the result will be similar to the image below:
 
 
 ## How to measure model performance  
-In this part, we are using `decoder_uv` model as an example for performance measurement.
+In this part, we are using the `decoder_uv` model as an example for performance measurement.
 
 ### 1. Build JAIOPT framework
 
-Navigate to the `JAIOPT` directory.  
+Navigate to the `JAIOPT` directory:  
 ```
 cd ~/Documents/GitHub/demo/JPEG-AI-OPT/JAIOPT/
 ```
-Run the `build.sh` script to initiate the build process.
+Run the `build.sh` script to initiate the build process:
 ```bash
 ./build.sh
 ```
@@ -227,9 +227,9 @@ If the build is successful, the result will be similar to the image below:
 
 ### 2. Configuration for model
 
-After compiling `JAIOPT` successfully, proceed with the configuration steps for the `decoder_uv` model:
+After compiling `JAIOPT` successfully, proceed with the configuration steps for the `decoder_uv` model.
 
-Navigate to the `Verification_Models/decoder` directory  
+Navigate to the `Verification_Models/decoder` directory:  
 ```
 cd ~/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/
 ```
@@ -245,7 +245,7 @@ Here is a more detailed example:
 > ```
 > model_file_path: /home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.onnx
 > ```
-> And the modification is like:
+> The modification is like this:
 > ![13_Update_Model_File_Path.jpg](/images/13_Update_Model_File_Path.jpg)  
 
 
@@ -255,7 +255,7 @@ Navigate to your `JAIOPT` directory:
 ```
 cd ~/Documents/GitHub/demo/JPEG-AI-OPT/JAIOPT/
 ```
-In your `JAIOPT` folder, make sure you can find a folder named `lothar`, then execute command to convert that ONNX to our internal computational graph:  
+In your `JAIOPT` folder, make sure you can find a folder named `lothar`, then execute the command to convert that ONNX to our internal computational graph:  
 ```bash
 python3.7 lothar/controller.py convert --config=path/to/decoder_uv.yml --model_path=path/to/decoder_uv.onnx
 ```
@@ -267,7 +267,7 @@ Here is a more detailed example:
 > ```
 > python3.7 /home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/JAIOPT/lothar/controller.py convert --config=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.yml --model_path=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.onnx
 > ```
-> The result of conversion should be like:  
+> The result of conversion should be like this:  
 > ![16_Convert_Done.jpg](/images/16_Convert_Done.jpg)  
 
 
@@ -292,7 +292,7 @@ Here is a more detailed example:
 > ```
 > python3.7 /home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/JAIOPT/lothar/controller.py run --config=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.yml --model_path=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.onnx
 > ```
-> The `decoder_uv` model will then be executed on the smartphone on some random inputs created by the script. The running result should be like:
+> The `decoder_uv` model will then be executed on the smartphone on some random inputs created by the script. The running result should be like this:
 > ![19_Run_Success.jpg](/images/19_Run_Successjpg.jpg)  
 >
 > For more information:
