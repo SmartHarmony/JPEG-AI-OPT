@@ -138,11 +138,13 @@ if '__main__' == __name__:
 
 
     deepvan_output = r'/home/huzq85/2-working/cocogen-internal/model_out_result_27'
-    pytorch_output = r'/home/huzq85/2-working/JPEG-AI-OPT/Verification_Models/result_verification/vm_io/decoder/output_hyper_decoder_y'
+    # pytorch_output = r'/home/huzq85/2-working/JPEG-AI-OPT/Verification_Models/result_verification/vm_io/decoder/output_hyper_decoder_y'
+    pytorch_output = r'/home/huzq85/2-working/JPEG-AI-OPT/Verification_Models/result_verification/vm_io_half/decoder_half/output_hyper_decoder_y'
     
     deepvan_output_val_fp16 = load_data_from_file(deepvan_output)
 
-    pytorch_val_bin = load_data_from_file(pytorch_output, 'float32')
+    # pytorch_val_bin = load_data_from_file(pytorch_output, 'float32')
+    pytorch_val_bin = load_data_from_file(pytorch_output, 'float16')
 
     # Start to compare the results
     compare_output('testing', deepvan_output_val_fp16,
