@@ -2,6 +2,7 @@ import os
 import numpy as np
 import math
 import common
+import argparse
 
 
 def load_data(npy_file, datatype):
@@ -133,19 +134,25 @@ def convert32_16(data):
     return float16_array
 
 
-if '__main__' == __name__:
-    np.set_printoptions(threshold=math.inf)
-
-
-    deepvan_output = r'/home/huzq85/2-working/cocogen-internal/model_out_result_27'
-    # pytorch_output = r'/home/huzq85/2-working/JPEG-AI-OPT/Verification_Models/result_verification/vm_io/decoder/output_hyper_decoder_y'
-    pytorch_output = r'/home/huzq85/2-working/JPEG-AI-OPT/Verification_Models/result_verification/vm_io_half/decoder_half/output_hyper_decoder_y'
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--pytorch_results', type=str, default = '', required=True, help = 'Results from the PyTorch model')
+    parser.add_argument('--jai_results', type=str, default = '', required=True, help='Results from the JPEG AI model')
+    parser.add_argument('--validation_threshold', type=float, default=0.995, help='Validation threshold')
     
-    deepvan_output_val_fp16 = load_data_from_file(deepvan_output)
+    return parser.parse_known_args()
 
-    # pytorch_val_bin = load_data_from_file(pytorch_output, 'float32')
-    pytorch_val_bin = load_data_from_file(pytorch_output, 'float16')
+
+
+if '__main__' == __name__:
+    # np.set_printoptions(threshold=math.inf)
+    FLAGS, unparsed = parse_args()
+    pytorch_results = FLAGS.pytorch_results
+    jai_results = FLAGS.jai_results
+    threshold = FLAGS.validation_threshold
+    jai_results = load_data_from_file(jai_results)
+    pytorch_results = load_data_from_file(pytorch_results)
 
     # Start to compare the results
-    compare_output('testing', deepvan_output_val_fp16,
-                   pytorch_val_bin, 0.995, False)
+    compare_output('testing', jai_results,
+                   pytorch_results, float(threshold), False)
