@@ -4,8 +4,6 @@ models:
   hyper_decoder_y:
     platform: onnx
     model_file_path: /home/huzq85/2-working/JPEG-AI-OPT/Verification_Models/decoder/hyper_decoder_y.onnx
-    # model_file_path: /Users/guan/Documents/startup/cocogen-internal/models/vit_b_16_cut.onnx
-    # validate_model_file_path: /Users/guanjiexiong/Downloads/mobilebert384niu_scale_batch1.onnx
     subgraphs:
       - input_tensors:
           - 'input'
