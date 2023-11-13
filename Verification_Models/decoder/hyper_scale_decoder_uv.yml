@@ -19,6 +19,7 @@ models:
         - /home/huzq85/2-working/JPEG-AI-OPT/Verification_Models/pytorch_io/decoder/input_hyper_scale_decoder_uv
         validation_outputs_data:
         - /home/huzq85/2-working/JPEG-AI-OPT/Verification_Models/pytorch_io/decoder/output_hyper_scale_decoder_uv
+        validation_threshold: {'GPU': 0.995}
         backend: caffe2
     cl_mem_type: image
     runtime: gpu
