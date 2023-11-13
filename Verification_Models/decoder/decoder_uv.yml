@@ -17,8 +17,8 @@ models:
         output_shapes:
           - 1,32,128,128
         output_data_formats: NCHW
-        # validation_inputs_data: 
-        #   - /media/huzq85/2TB_Work/2-working/1024_jpeg_ai/vm_io/decoder/input_decoder_uv
+        validation_inputs_data: 
+          - /media/huzq85/2TB_Work/2-working/1024_jpeg_ai/vm_io/decoder/input_decoder_uv
         backend: caffe2
     cl_mem_type: image
     runtime: gpu
