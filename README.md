@@ -62,6 +62,32 @@ Diagram 1 illustrates the verification procedure's underlying mechanism.
 
 **Diagram 1. Result Verification Procedure**
 
+To perform result verification for the `hyper_decoder_y model`, follow the example below:
+1. Provide three validation-related configurations, as illustrated in Figure 1. These configurations include `validation_inputs_data` and `validation_outputs_data` to specify the inputs and outputs from the PyTorch model, along with `validation_threshold` indicating the tolerance for similarity between the PyTorch and ONNX results.
+
+![23_res_validate_configure_file.png](/images/23_res_validate_configure_file.png#center).
+
+  **Figure 1. Configure for results verification**
+
+2. Once the configuration file is in place, execute the following commands for validation:
+
+* Convert the model:
+
+`python ./lothar/controller.py convert --config=/Path/To/Project/JPEG-AI-OPT/Verification_Models/encoder/hyper_decoder_y.yml`
+
+* Run the model and validate the results:
+
+`python ./lothar/controller.py run --validate --warmup_round=5 --config=/Path/To/Project/JPEG-AI-OPT/Verification_Models/encoder/hyper_decoder_y.yml`
+
+Figure 2 presents the results verification for the `hyper_decoder_y` model.
+![24_hyper_decoder_y_result_verify.png](/images/24_hyper_decoder_y_result_verify.png#center)
+
+  **Figure 2. Results verfication for model `hyper_decoder_y`**
+
+**Note1**: PyTorch models' inputs and outputs are available at: `/Path/To/Project/JPEG-AI-OPT/Verification_Models/pytorch_io`
+
+**Note2**: Further details on running the models will be explained later.
+
 ## Supported Operator Types
 Table 2 displays the operator types that are supported and have been utilized in the verification models.
 
