@@ -1,22 +1,44 @@
 # JPEG-AI Verification Model 3.3
 
 ## Introduction
-JPEG-AI is a learning-based image coding standard, and it includes verification models as part of the standard. This repository aims to offer the verification models in ONNX format, along with our optimized backend support known as JAIOPT. These models consist of five pairs of Deep Neural Network (DNN) models used within the JPEG-AI framework, including single_encode, hyper_encoder, hyper_decoder, hyper_scale_decoder, and single_decoder. Each of these pairs includes two models, one for luminance (_y) and one for chrominance (_uv) encoding or decoding. The first four pairs of models are employed in the encoding phase, while the last three pairs are used in the decoding phase.
+`JPEG-AI` is a learning-based image coding standard, and it includes verification models as part of the standard. This repository aims to offer the verification models in ONNX format, along with our optimized backend support known as JAIOPT. These models consist of five pairs of **Deep Neural Network (DNN)** models used within the JPEG-AI framework, including `single_encode`, `hyper_encoder`, `hyper_decoder`, `hyper_scale_decoder`, and `single_decoder`. Each of these pairs includes two models, one for **luminance (_y)** and one for **chrominance (_uv)** encoding or decoding. The first four pairs of models are employed in the encoding phase, while the last three pairs are used in the decoding phase.  
+It is essential to note that the ONNX models, as well as our inference framework found in this repository, are primarily intended for performance evaluation rather than end-to-end inference. Additionally, we provide performance comparisons between our framework and others.  
+In summary, our inference framework demonstrates significant speed improvements, approximately `5.5-6.5` times faster than `NNAPI` and about `3` times faster than `QNN` (Qualcomm Neural Network).`
 
-It is essential to note that the ONNX models, as well as our inference framework found in this repository, are primarily intended for performance evaluation rather than end-to-end inference. Additionally, we provide performance comparisons between our framework and others. In summary, our inference framework demonstrates significant speed improvements, approximately 5.5-6.5 times faster than NNAPI and about 3 times faster than QNN (Qualcomm Neural Network).
-
-The backend in this repo was tested on Qualcomm Sanpdragon 8 only. It may not support other hardware well. 
+The backend in this repo was tested on `Qualcomm Snapdragon 8` device (Example: Samsung Galaxy S21+).  
 
 ## Structure of this Repo
-This repository comprises two directories: `JAIOPT`, which has our inference framework including compiler and inference engine, and `Verification_Models`, which contains the models discussed in the `Introduction`.
+This repository comprises two directories:  
+1. `JAIOPT`  
+Has our inference framework including compiler and inference engine.  
+2. `Verification_Models`  
+Contains the models discussed in the `Introduction`.
+
+```
+.
+├── config.yml
+├── Copyright.md
+├── images
+├── JAIOPT               // Our inference framework
+├── LICENSE-APACHE
+├── LICENSE-MIT
+├── README.md
+└── Verification_Models  // Models
+```
 
 ## Performance Benchmarking
 Table 1 provides performance comparisons of decoder models between our inference framework and others on Snapdragon SoC (especially GPU) with Android OS. The focus is on execution latency. The testing configurations are as follows:
 
-* Input image size: 1024x1024                                                          
-* Benchmark platform: Snapdragon 8 Gen 2, GPU                              
-* Inference framework: JAIOPT (i.e., our framework), NNAPI (with TFLite and ONNX-Runtime, e.g., ORT as front ends) and QNN
-* Data type: FP16    
+* Input image size:  
+`1024x1024`  
+* Benchmark platform:  
+`Snapdragon 8 Gen 2, GPU`  
+* Inference framework:  
+`JAIOPT` (i.e., our framework)  
+`NNAPI` (with TFLite and ONNX-Runtime, e.g., ORT as front ends)  
+`QNN`
+* Data type:  
+`FP16`
 
 
 |     Model                     |     NNAPI   w/ONNX (ms)    |     NNAPI   w/ tflite   (ms)    |     QNN-GPU   (ms)    |     JAIOPT   (ms)    |     Speedup      over ORT    |     Speedup     over Tflite    |     Speedup     over   QNN-GPU    |
@@ -32,7 +54,7 @@ Table 1 provides performance comparisons of decoder models between our inference
 **Table 1. DECODER Performance Comparisons**
 
 ## Result Verification
-We conducted a comparison between the computed results of the exported (ONNX) models and the original PyTorch version on a pixel level, setting tolerance thresholds ranging from 0.5% to 1%. The results indicate that the exported ONNX models consistently yield accurate results when compared to the PyTorch version.
+We conducted a comparison between the computed results of the exported (ONNX) models and the original PyTorch version on a pixel level, setting tolerance thresholds ranging from `0.5%` to `1%`. The results indicate that the exported ONNX models consistently yield accurate results when compared to the PyTorch version.
 
 Diagram 1 illustrates the verification procedure's underlying mechanism.
 
@@ -53,70 +75,230 @@ Table 2 displays the operator types that are supported and have been utilized in
 
 **Table 2. Supported Operator Types**
 
-## Environment Setup
-Please adhere to the detailed instructions in the following sub-section for setting up the environment prior to conducting performance measurements.
+## Environment Setup  
+### 1. Install our Compiler Toolkit
+Clone this repository to your workspace.
+(Our workspace in this example is `~/Documents/GitHub/demo`)
+```bash
+mkdir ~/Documents/GitHub/demo
+cd ~/Documents/GitHub/demo
+git clone https://github.com/SmartHarmony/JPEG-AI-OPT
+cd JPEG-AI-OPT
+```
 
-### 1. Python path setup
-  Update the python path to the path of your python3.7 (Python version later than 3.7 should work as well) in file repo/opencl-kernel/opencl_kernel_configure.bzl
-  by changing the line `python_bin_path = "/usr/local/bin/python3.7"`
-  You can see your Python path by run 
-  `whereis python`
+### 2. Set up Python path and libraries
+First, configure the Python path to align with your specific environment.
+> *Note*: This instruction uses `Python 3.7` as an example. However, Python versions later than 3.7 should also be compatible.  Make sure to use the path corresponding to the Python version you are working with.  
+
+Navigate to the `JPEG-AI-OPT/JAIOPT/repo/opencl-kernel` directory:
+```bash
+cd ~/Documents/GitHub/demo/JPEG-AI-OPT/repo/
+```
+ Open the file named `opencl_kernel_configure.bzl` and find line 40 in the file. It should look like this: 
+```bash
+python_bin_path = "/usr/local/bin/python3.7"
+```
+
+Replace `/usr/local/bin/python3.7` with the path to your `Python 3.7` installation.   
+
+To find your Python path, run the following command in your terminal:  
+```bash
+whereis python
+```
+Executing the above commands will display your Python path as shown in the following image:
+![02_whereis_Python.jpg](/images/02_whereis_Python.jpg)  
   
-You can install the necessary Python libraries by running the command: `pip install -r requirements.txt` under the `JAIOPT` directory.
+After configuring your custom Python path, the next step is to install the required libraries.  
+Navigate to the `JAIOPT` directory: 
+```
+cd ~/Documents/GitHub/demo/JPEG-AI-OPT/JAIOPT/
+```
+There, you can install the necessary Python libraries by executing the following command:
+```bash
+pip install -r requirements.txt
+```
 
-> In the following, whenever you see any importing error, you may need to install the missing package by running `pip install package_name`
+After successful installation, the result should appear as follows: 
+![04_Install_Python_Libraries_Done.jpg](/images/04_Install_Python_Libraries_Done.jpg)  
+> *Note:* Whenever you see any importing error, you may need to install the missing package by running
+> ```bash
+> pip install missing_package_name
+> ```
 
-### 2. Install the required build tools and packages
-On Linux, run:
+### 3. Install required build tools and packages
+On **Linux**, run:
 ```bash
 sudo apt-get install cmake gcc g++ libboost-all-dev libncurses5
 ```
+After successful installation, the result should appear as follows:  
+![06_Install_Linux_Libraries_Done.jpg](/images/06_Install_Linux_Libraries_Done.jpg)  
+On **MacOS**, run:
+```bash
+brew install cmake gcc boost ncurses
+```
+For `MacOS` users, if Homebrew is not installed on your system, you can install it by the instructions on the [Homebrew website](https://brew.sh/). 
 
-### 3. Android SDK/NDK setup
-- Install Bazel (5.0.0) from [Bazel Documentation](https://docs.bazel.build/versions/master/install.html)
-- Download and install Android SDK. It can be downloaded either from [Android Studio](https://developer.android.com/studio) or from the Android SDK command line tool (https://developer.android.com/studio#command-tools).
-- Download [Android NDK](https://developer.android.com/ndk/downloads) version `r16b` or `r17c` (later versions may be supported but have not been tested)
-- Export the directory of Android SDK and Android NDK to the environment path
-  For instance, on Mac cshell, add the following into .cshrc (change the paths to yours), and on Linux, you can add corresponding paths to .bashrc.
-  `setenv ANDROID_SDK_HOME ~/Library/Android/sdk`
-  `setenv ANDROID_NDK_HOME ~/Programs/android-ndk-r17c`
-  `setenv PATH ~/Library/Android/sdk/tools:~/Library/Android/sdk/platform-tools:$PATH`
+### 4. Set up Android SDK/NDK
+- Install Bazel (5.0.0) from [Bazel Documentation](https://docs.bazel.build/versions/master/install.html).
+- Download and install Android SDK. It can be downloaded either from [Android Studio](https://developer.android.com/studio) or from the Android SDK [command line tool](https://developer.android.com/studio#command-tools).
+- Download [Android NDK](https://developer.android.com/ndk/downloads) version `r16b` or `r17c` (later versions may be supported but have not been tested).
+- Export the directory of Android SDK and Android NDK to the environment path.
+
+  If you are in `zsh` or `bash` environments, add the following lines to your `.bashrc` file:
+  ```bash
+  export ANDROID_SDK_HOME=~/path/to/Android/sdk
+  export ANDROID_NDK_HOME=~/path/to/android-ndk-r17c
+  export PATH=~/path/to/Android/sdk/tools:~/path/to/Android/sdk/platform-tools:$PATH
+  ```
+  If you are in `cshell` enviornments, add the following lines to your `.cshrc` file:
+  ```
+  setenv ANDROID_SDK_HOME ~/path/to/Android/sdk
+  setenv ANDROID_NDK_HOME ~/path/to/android-ndk-r17c
+  setenv PATH ~/path/to/Android/sdk/tools:~/path/to/Android/sdk/platform-tools:$PATH`
+  ```
+
+  - Here is our more detailed example in `zsh` and `bash` enviornments:
+  > Enter the commands:
+  > ```bash
+  > export ANDROID_SDK_HOME=/home/phoenix/Android/Sdk/
+  > export ANDROID_NDK_HOME=/home/phoenix/Android/Sdk/ndk/20.1.5948944/
+  > export PATH=/home/phoenix/Android/Sdk/tools:/home/phoenix/Android/Sdk/platform:$PATH
+  > ```    
   
-### 4. Install this Compiler Toolkit
-If you have already cloned this repository, the compilation toolkit should be in your possession. If not, please download it from this repository.
+ 
+  You can execute the following command to verify if the Android environment has been successfully exported:
+  ```bash
+  echo $ANDROID_SDK_HOME
+  echo $ANDROID_NDK_HOME
+  echo $PATH
+  ```
+  If you have successfully exported your Android environment variables, the output of the above commands should be as follows:
+  ![22_Verify_Android_Environment.jpg](/images/22_Verify_Android_Environment.jpg)  
+
+  
+  
 
 ### 5. Check your setup
-Enter the `JAIOPT` directory. To check whether your setup is in good shape, run the following in the root directory of the toolkit.
+Navigate to the `JAIOPT` directory:  
+```
+cd ~/Documents/GitHub/demo/JPEG-AI-OPT/JAIOPT/
+```
+Execute the following commands:  
+```
+bazel build --config android --config optimization //deepvan/executor:libexecutor_shared.so --config symbol_hidden --define neon=true --define openmp=true --define opencl=true --cpu=arm64-v8a
+```
+If the build is successful, the result will be similar to the image below: 
+![10_Check_Your_Setup_Done.jpg](/images/10_Check_Your_Setup_Done.jpg)  
 
-`bazel build --config android --config optimization //deepvan/executor:libexecutor_shared.so --config symbol_hidden --define neon=true --define openmp=true --define opencl=true --cpu=arm64-v8a`
+>*Note:* In this step, if you encounter the build error:
+>```
+>  error: invalid value 'c++17' in '-std=c++17'
+>```
+> please proceed with the modifications outlined below:
+> - Navigate to the `JAIOPT` directory and open the `.bazelrc` file.
+> - Locate `lines 8` and `9`, which should appear as follows: 
+> ```
+>  build --cxxopt=-std=c++17
+>  build --host_cxxopt=-std=c++17
+> ```
+> - Update these lines to use the `C++1z` standard instead of `C++17`:
+>   
+>```
+>  build --cxxopt=-std=c++1z
+>  build --host_cxxopt=-std=c++1z
+> ```
 
-> If you encounter the build error `error: invalid value 'c++17' in '-std=c++17'`, you could resolve them by updating the build options in the `.bazelrc` file located at the root of `JAIOPT`.
 
-> Change line 8: `build --cxxopt=-std=c++17` to `build --cxxopt=-std=c++1z`
+## How to measure model performance  
+In this part, we are using the `decoder_uv` model as an example for performance measurement.
 
-> Change line 9: `build --host_cxxopt=-std=c++17` to `build --host_cxxopt=-std=c++1z`
+### 1. Build JAIOPT framework
 
-## How to measure model performance
-Before measuring performance, build the `JAIOPT` framework by navigating to the `JAIOPT` directory and executing the `build.sh` script. Once `JAIOPT` has been successfully compiled, proceed with the following steps.
+Navigate to the `JAIOPT` directory:  
+```
+cd ~/Documents/GitHub/demo/JPEG-AI-OPT/JAIOPT/
+```
+Run the `build.sh` script to initiate the build process:
+```bash
+./build.sh
+```
+If the build is successful, the result will be similar to the image below:
+![12_Build_Framework_Done.jpg](/images/12_Build_Framework_Done.jpg)  
 
-Let us use the `decoder_uv` model as an example for performance measurement. Navigate to the `Verification_Models` directory to locate the `decoder_uv` model, and take note that there is a configuration file named `decoder_uv.yml` associated with this model.
+### 2. Configuration for model
 
-We need to perform the following two steps:                                                                     
+After compiling `JAIOPT` successfully, proceed with the configuration steps for the `decoder_uv` model.
 
-1. Conversion
+Navigate to the `Verification_Models/decoder` directory:  
+```
+cd ~/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/
+```
+Locate the configuration file `decoder_uv.yml`, which contains pre-defined parameters like model input/output shape, data type, and runtime.  
+Update the `model_file_path` in this file to reflect the correct path by modifying `line 6` to:
+```
+ model_file_path: path/to/model/decoder_uv.onnx
+```
+>*Note:* This example is specific to the `decoder_uv` model. For a general `.yml` template, please refer to the [config.yml](https://github.com/SmartHarmony/JPEG-AI-OPT/blob/main/config.yml).
 
-Execute command `python3.7 TOOL_PATH/lothar/controller.py convert --config=path/to/your/config.yml --model_path=ONNX_PATH` to convert that ONNX to our internal computational graph.
+Here is a more detailed example:
+> Our model path is:  
+> ```
+> model_file_path: /home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.onnx
+> ```
+> The modification is like this:
+> ![13_Update_Model_File_Path.jpg](/images/13_Update_Model_File_Path.jpg)  
 
-In the provided command line, replace `TOOL_PATH` with the root path of `JAIOPT`, and `ONNX_PATH` with the path to your testing ONNX model (refer to the `Verification_Models` directory). For the `config` option, use the predefined `decoder_uv.yml` file, which contains pre-defined parameters like model input/output shape, data type, and runtime. The template config.yml can be referred to [here](https://github.com/SmartHarmony/JPEG-AI-OPT/blob/main/config.yml).
 
-2. Run
+### 3. Measure model performance  
+#### 3.1 Conversion  
+Navigate to your `JAIOPT` directory:  
+```
+cd ~/Documents/GitHub/demo/JPEG-AI-OPT/JAIOPT/
+```
+In your `JAIOPT` folder, make sure you can find a folder named `lothar`, then execute the command to convert that ONNX to our internal computational graph:  
+```bash
+python3.7 lothar/controller.py convert --config=path/to/decoder_uv.yml --model_path=path/to/decoder_uv.onnx
+```
+>*Note:* In the given command, the `decoder_uv` model is used as a representative example. For testing with a different `ONNX` model, replace `decoder_uv` with the name of your target model and update the corresponding configuration `.yml` file accordingly. Refer to the contents of the `Verification_Models` directory for examples of model configurations.
+
+
+Here is a more detailed example:
+> Enter the command:
+> ```
+> python3.7 /home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/JAIOPT/lothar/controller.py convert --config=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.yml --model_path=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.onnx
+> ```
+> The result of conversion should be like this:  
+> ![16_Convert_Done.jpg](/images/16_Convert_Done.jpg)  
+
+
+
+#### 3.2 Run
   
-To run the model, connect your Android phone to this computer, enable `Developer` mode, and turn on `USB Debugging` in the `Developer Options` within your phone's Settings. Afterward, run the following command in the root directory of this tool on your computer:
+To run the model, connect your Android phone to this computer, enable `Developer` mode, and turn on `USB Debugging` in the `Developer Options` within your phone's `Settings`. 
 
-  `python3.7 TOOL_PATH/lothar/controller.py run --config=path/to/your/config.yml --model_path=ONNX_PATH`
- where TOOL_PATH and ONNX_PATH should be replaced as above.
+Navigate to your `JAIOPT` directory:  
+```
+cd ~/Documents/GitHub/demo/JPEG-AI-OPT/JAIOPT/
+```
 
- The `decoder_uv` model will then be executed on the smartphone on some random inputs created by the script.
+In your `JAIOPT` folder, make sure you can find a folder named `lothar`, afterward, run the following command in the root directory of this tool on your computer:
+```bash
+python3.7 lothar/controller.py run --config=path/to/decoder_uv.yml --model_path=path/to/decoder_uv.onnx
+```
+>*Note:* In the given command, the `decoder_uv` model is used as a representative example. For testing with a different `ONNX` model, replace `decoder_uv` with the name of your target model and update the corresponding configuration `.yml` file accordingly. Refer to the contents of the `Verification_Models` directory for examples of model configurations.
+
+Here is a more detailed example:
+> Enter the command:
+> ```
+> python3.7 /home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/JAIOPT/lothar/controller.py run --config=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.yml --model_path=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.onnx
+> ```
+> The `decoder_uv` model will then be executed on the smartphone on some random inputs created by the script. The running result should be like this:
+> ![19_Run_Success.jpg](/images/19_Run_Successjpg.jpg)  
+>
+> For more information:
+> ![20_Run_Success_More_Information.jpg](/images/20_Run_Success_More_Information.jpg)  
+
+  
 
 ## License
   Source code uses [Apache License 2.0](https://github.com/SmartHarmony/JPEG-AI-OPT/blob/main/LICENSE)
