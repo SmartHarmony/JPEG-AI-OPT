@@ -19,11 +19,10 @@ models:
         - /home/huzq85/2-working/JPEG-AI-OPT/Verification_Models/result_verification/vm_io/decoder/input_hyper_decoder_y
         validation_outputs_data:
         - /home/huzq85/2-working/JPEG-AI-OPT/Verification_Models/result_verification/vm_io/decoder/output_hyper_decoder_y
-        - /home/huzq85/2-working/JPEG-AI-OPT/Verification_Models/result_verification/vm_io/decoder/output_hyper_decoder_y
         backend: caffe2
     cl_mem_type: image
     runtime: gpu
-    winograd: 0
+    winograd: 4
     data_type: float16_float32
     # model_type: bert
     load_from_im: False
