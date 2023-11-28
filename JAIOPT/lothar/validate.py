@@ -9,19 +9,6 @@ import onnxruntime.backend as ort_backend
 
 from lothar.commons import common
 
-"""
-python lothar/validate.py --platform=onnx \
-    --model_file=/Users/newway/Documents/Research/MobiCom19/DeepVan-All/deep-sparse/models/yolo/yolov3_retrained_0.460_13_striped.onnx \
-    --input_file=/Users/newway/Desktop/deepvan_run/model_input \
-    --deepvan_out_file=/Users/newway/Desktop/deepvan_run/model_out \
-    --input_node=input.1 \
-    --output_node=657,727,797 \
-    --input_shape=1,416,416,3 \
-    --output_shape=507,85:2028,85:8112,85 \
-    --output_data_format=NHWC,NHWC,NHWC \
-    --backend=pytorch \
-    --validation_threshold 0.995
-"""
 # Validation Flow:
 # 1. Generate input data
 # 2. Use deepvan_run to run model on phone.
