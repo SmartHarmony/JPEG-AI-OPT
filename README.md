@@ -98,6 +98,8 @@ Table 2 displays the operator types that are supported and have been utilized in
 | Conv2D          |
 | Deconv2D        |
 | Eltwise         |
+| Tanh            |
+| Sigmoid         |
 
 **Table 2. Supported Operator Types**
 
