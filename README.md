@@ -145,9 +145,7 @@ There, you can install the necessary Python libraries by executing the following
 ```bash
 pip install -r requirements.txt
 ```
-
-After successful installation, the result should appear as follows: 
-![04_Install_Python_Libraries_Done.jpg](/images/04_Install_Python_Libraries_Done.jpg)  
+ 
 > *Note:* Whenever you see any importing error, you may need to install the missing package by running
 > ```bash
 > pip install missing_package_name
@@ -158,8 +156,7 @@ On **Linux**, run:
 ```bash
 sudo apt-get install cmake gcc g++ libboost-all-dev libncurses5
 ```
-After successful installation, the result should appear as follows:  
-![06_Install_Linux_Libraries_Done.jpg](/images/06_Install_Linux_Libraries_Done.jpg)  
+
 On **MacOS**, run:
 ```bash
 brew install cmake gcc boost ncurses
