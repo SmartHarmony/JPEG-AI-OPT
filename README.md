@@ -290,9 +290,7 @@ Here is a more detailed example:
 > python3.7 /home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/JAIOPT/lothar/controller.py run --config=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.yml --model_path=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.onnx
 > ```
 > The `decoder_uv` model will then be executed on the smartphone on some random inputs created by the script. The running result should be like this:
-> ![19_Run_Success.jpg](/images/19_Run_Successjpg.jpg)  
 >
-> For more information:
 > ![20_Run_Success_More_Information.jpg](/images/20_Run_Success_More_Information.jpg)  
 
   
