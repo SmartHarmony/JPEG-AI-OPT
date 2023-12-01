@@ -182,27 +182,6 @@ For `MacOS` users, if Homebrew is not installed on your system, you can install 
   setenv PATH ~/path/to/Android/sdk/tools:~/path/to/Android/sdk/platform-tools:$PATH`
   ```
 
-  - Here is our more detailed example in `zsh` and `bash` enviornments:
-  > Enter the commands:
-  > ```bash
-  > export ANDROID_SDK_HOME=/home/phoenix/Android/Sdk/
-  > export ANDROID_NDK_HOME=/home/phoenix/Android/Sdk/ndk/20.1.5948944/
-  > export PATH=/home/phoenix/Android/Sdk/tools:/home/phoenix/Android/Sdk/platform:$PATH
-  > ```    
-  
- 
-  You can execute the following command to verify if the Android environment has been successfully exported:
-  ```bash
-  echo $ANDROID_SDK_HOME
-  echo $ANDROID_NDK_HOME
-  echo $PATH
-  ```
-  If you have successfully exported your Android environment variables, the output of the above commands should be as follows:
-  ![22_Verify_Android_Environment.jpg](/images/22_Verify_Android_Environment.jpg)  
-
-  
-  
-
 ### 5. Check your setup
 Navigate to the `JAIOPT` directory:  
 ```
@@ -212,8 +191,6 @@ Execute the following commands:
 ```
 bazel build --config android --config optimization //deepvan/executor:libexecutor_shared.so --config symbol_hidden --define neon=true --define openmp=true --define opencl=true --cpu=arm64-v8a
 ```
-If the build is successful, the result will be similar to the image below: 
-![10_Check_Your_Setup_Done.jpg](/images/10_Check_Your_Setup_Done.jpg)  
 
 >*Note:* In this step, if you encounter the build error:
 >```
@@ -243,12 +220,7 @@ Navigate to the `JAIOPT` directory:
 ```
 cd ~/Documents/GitHub/demo/JPEG-AI-OPT/JAIOPT/
 ```
-Run the `build.sh` script to initiate the build process:
-```bash
-./build.sh
-```
-If the build is successful, the result will be similar to the image below:
-![12_Build_Framework_Done.jpg](/images/12_Build_Framework_Done.jpg)  
+Run the `build.sh` script under the `JAIOPT` directory to initiate the build process:
 
 ### 2. Configuration for model
 
