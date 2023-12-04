@@ -244,7 +244,9 @@ Here is a more detailed example:
 > model_file_path: /home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.onnx
 > ```
 > The modification is like this:
-> ![13_Update_Model_File_Path.jpg](/images/13_Update_Model_File_Path.jpg)  
+> ![13_Update_Model_File_Path.jpg](/images/13_Update_Model_File_Path.jpg)
+
+If you need to validate the model's results, make sure to update the paths for `validation_inputs_data` and `validation_outputs_data` as well.
 
 
 ### 3. Measure model performance  
@@ -265,7 +267,7 @@ Here is a more detailed example:
 > ```
 > python /home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/JAIOPT/lothar/controller.py convert --config=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.yml --model_path=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.onnx
 > ```
-> The result of conversion should be like this:  
+> The result of the conversion should be like this:  
 > ![16_Convert_Done.jpg](/images/16_Convert_Done.jpg)  
 
 
@@ -290,7 +292,7 @@ Here is a more detailed example:
 > ```
 > python /home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/JAIOPT/lothar/controller.py run --config=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.yml --model_path=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.onnx
 > ```
-> The `decoder_uv` model will then be executed on the smartphone on some random inputs created by the script. The running result should be like this:
+> The `decoder_uv` model will then be executed on the smartphone on random inputs created by the script. The running result should be like this:
 >
 > ![20_Run_Success_More_Information.jpg](/images/20_Run_Success_More_Information.jpg)  
 
