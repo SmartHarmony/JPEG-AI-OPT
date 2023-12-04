@@ -165,47 +165,10 @@ For `MacOS` users, if Homebrew is not installed on your system, you can install 
 
 ### 4. Set up Android SDK/NDK
 - Install Bazel (5.0.0) from [Bazel Documentation](https://docs.bazel.build/versions/master/install.html).
-- Download and install Android SDK. It can be downloaded either from [Android Studio](https://developer.android.com/studio) or from the Android SDK [command line tool](https://developer.android.com/studio#command-tools). Detailed steps for installation can be referred to [Installation through Android Studio](https://developer.android.com/about/versions/14/setup-sdk) and [Installation through command line tool](https://developer.android.com/tools/sdkmanager) 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- Download and install Android SDK. It can be downloaded either from [Android Studio](https://developer.android.com/studio) or from the Android SDK [command line tool](https://developer.android.com/studio#command-tools). Detailed steps for installation can be referred to [Installation through Android Studio](https://developer.android.com/about/versions/14/setup-sdk) and [Installation through command line tool](https://developer.android.com/tools/sdkmanager)
+- Make sure `platform-tools` will be installed after the installation of Android SDK. Please refer to the steps from the above links.
 - Download [Android NDK](https://developer.android.com/ndk/downloads) version `r16b` or `r17c` (later versions may be supported but have not been tested).
 - Export the directory of Android SDK and Android NDK to the environment path.
-
-
-
-
-
-
-
-
-
-
-
 
   If you are in `zsh` or `bash` environments, add the following lines to your `.bashrc` file:
   ```bash
