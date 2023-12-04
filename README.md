@@ -84,9 +84,9 @@ Figure 2 presents the results verification for the `hyper_decoder_y` model.
 
   **Figure 2. Results verfication for model `hyper_decoder_y`**
 
-**Note1**: PyTorch models' inputs and outputs are available at: `/Path/To/Project/JPEG-AI-OPT/Verification_Models/pytorch_io`
+> *Note1*: PyTorch models' inputs and outputs are available at: `/Path/To/Project/JPEG-AI-OPT/Verification_Models/pytorch_io`
 
-**Note2**: Further details on running the models will be explained later.
+> *Note2*: Further details on running the models will be explained later.
 
 ## Supported Operator Types
 Table 2 displays the operator types that are supported and have been utilized in the verification models.
