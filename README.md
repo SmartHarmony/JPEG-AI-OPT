@@ -131,7 +131,7 @@ Replace `/usr/local/bin/python3.7` with the path to your `Python 3.7` installati
 
 To find your Python path, run the following command in your terminal:  
 ```bash
-whereis python
+which python
 ```
 Executing the above commands will display your Python path as shown in the following image:
 ![02_whereis_Python.jpg](/images/02_whereis_Python.jpg)  
@@ -165,9 +165,47 @@ For `MacOS` users, if Homebrew is not installed on your system, you can install 
 
 ### 4. Set up Android SDK/NDK
 - Install Bazel (5.0.0) from [Bazel Documentation](https://docs.bazel.build/versions/master/install.html).
-- Download and install Android SDK. It can be downloaded either from [Android Studio](https://developer.android.com/studio) or from the Android SDK [command line tool](https://developer.android.com/studio#command-tools).
+- Download and install Android SDK. It can be downloaded either from [Android Studio](https://developer.android.com/studio) or from the Android SDK [command line tool](https://developer.android.com/studio#command-tools). Detailed steps for installation can be referred to [Installation through Android Studio](https://developer.android.com/about/versions/14/setup-sdk) and [Installation through command line tool](https://developer.android.com/tools/sdkmanager) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 - Download [Android NDK](https://developer.android.com/ndk/downloads) version `r16b` or `r17c` (later versions may be supported but have not been tested).
 - Export the directory of Android SDK and Android NDK to the environment path.
+
+
+
+
+
+
+
+
+
+
+
 
   If you are in `zsh` or `bash` environments, add the following lines to your `.bashrc` file:
   ```bash
@@ -254,7 +292,7 @@ cd ~/Documents/GitHub/demo/JPEG-AI-OPT/JAIOPT/
 ```
 In your `JAIOPT` folder, make sure you can find a folder named `lothar`, then execute the command to convert that ONNX to our internal computational graph:  
 ```bash
-python3.7 lothar/controller.py convert --config=path/to/decoder_uv.yml --model_path=path/to/decoder_uv.onnx
+python lothar/controller.py convert --config=path/to/decoder_uv.yml --model_path=path/to/decoder_uv.onnx
 ```
 >*Note:* In the given command, the `decoder_uv` model is used as a representative example. For testing with a different `ONNX` model, replace `decoder_uv` with the name of your target model and update the corresponding configuration `.yml` file accordingly. Refer to the contents of the `Verification_Models` directory for examples of model configurations.
 
@@ -262,7 +300,7 @@ python3.7 lothar/controller.py convert --config=path/to/decoder_uv.yml --model_p
 Here is a more detailed example:
 > Enter the command:
 > ```
-> python3.7 /home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/JAIOPT/lothar/controller.py convert --config=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.yml --model_path=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.onnx
+> python /home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/JAIOPT/lothar/controller.py convert --config=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.yml --model_path=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.onnx
 > ```
 > The result of conversion should be like this:  
 > ![16_Convert_Done.jpg](/images/16_Convert_Done.jpg)  
@@ -280,14 +318,14 @@ cd ~/Documents/GitHub/demo/JPEG-AI-OPT/JAIOPT/
 
 In your `JAIOPT` folder, make sure you can find a folder named `lothar`, afterward, run the following command in the root directory of this tool on your computer:
 ```bash
-python3.7 lothar/controller.py run --config=path/to/decoder_uv.yml --model_path=path/to/decoder_uv.onnx
+python lothar/controller.py run --config=path/to/decoder_uv.yml --model_path=path/to/decoder_uv.onnx
 ```
 >*Note:* In the given command, the `decoder_uv` model is used as a representative example. For testing with a different `ONNX` model, replace `decoder_uv` with the name of your target model and update the corresponding configuration `.yml` file accordingly. Refer to the contents of the `Verification_Models` directory for examples of model configurations.
 
 Here is a more detailed example:
 > Enter the command:
 > ```
-> python3.7 /home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/JAIOPT/lothar/controller.py run --config=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.yml --model_path=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.onnx
+> python /home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/JAIOPT/lothar/controller.py run --config=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.yml --model_path=/home/phoenix/Documents/GitHub/demo/JPEG-AI-OPT/Verification_Models/decoder/decoder_uv.onnx
 > ```
 > The `decoder_uv` model will then be executed on the smartphone on some random inputs created by the script. The running result should be like this:
 >
