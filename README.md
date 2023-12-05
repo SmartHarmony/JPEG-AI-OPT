@@ -116,11 +116,12 @@ cd JPEG-AI-OPT
 
 ### 2. Set up Python path and libraries
 First, configure the Python path to align with your specific environment.
-> *Note*: This instruction uses `Python 3.7` as an example. However, Python versions later than 3.7 should also be compatible.  Make sure to use the path corresponding to the Python version you are working with.  
+> *Note*: This instruction uses `Python 3.7` as an example. However, Python versions later than 3.7 should also be compatible.  Make sure to use the path corresponding to the Python version you are working with.
 
-Navigate to the `JPEG-AI-OPT/JAIOPT/repo/` directory:
+
+Navigate to the `JPEG-AI-OPT/JAIOPT/repo/opencl-kernel` directory:
 ```bash
-cd ~/Documents/GitHub/demo/JPEG-AI-OPT/repo/
+cd ~/Documents/GitHub/demo/JPEG-AI-OPT/JAIOPT/repo/opencl-kernel
 ```
  Open the file named `opencl_kernel_configure.bzl` and find line 40 in the file. It should look like this: 
 ```bash
