@@ -1,0 +1,26 @@
+library_name: JPEG_AI_Legacy
+target_abis: [arm64-v8a]
+models:
+  jpeg_ai_legacy:
+    platform: onnx
+    model_file_path: /home/huzq85/2-working/JPEG-AI-OPT/Verification_Models/legacy/model_0414.onnx
+    subgraphs:
+      - input_tensors:
+          - 'x.1'
+        input_data_formats: NCHW
+        input_shapes:
+          - 1,1,224,224
+        output_tensors:
+          - '185'
+        output_shapes:
+          - 1,128,14,14
+        output_data_formats: NCHW
+        backend: caffe2
+    cl_mem_type: image
+    runtime: gpu
+    winograd: 4
+    data_type: float16_float32
+    # model_type: bert
+    load_from_im: False
+    executing_only:
+      # CPU: ["Conv_57", "Reshape_58", "Transpose_59", "Concat_66"]

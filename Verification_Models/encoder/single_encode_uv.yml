@@ -3,9 +3,7 @@ target_abis: [arm64-v8a]
 models:
   single_encode_uv:
     platform: onnx
-    model_file_path: /media/huzq85/2TB_Work/2-working/jaiopt-release/Verification_Models/encoder/single_encode_uv.onnx
-    # model_file_path: /Users/guan/Documents/startup/cocogen-internal/models/vit_b_16_cut.onnx
-    # validate_model_file_path: /Users/guanjiexiong/Downloads/mobilebert384niu_scale_batch1.onnx
+    model_file_path: /home/huzq85/2-working/JPEG-AI-OPT/Verification_Models/encoder/single_encode_uv.onnx
     subgraphs:
       - input_tensors:
           - 'x.1'
@@ -17,8 +15,11 @@ models:
         output_shapes:
           - 1,64,32,32
         output_data_formats: NCHW
-        # validation_inputs_data: 
-        # - /media/huzq85/2TB_Work/2-working/1024_jpeg_ai/vm_io/encoder/input_encoder_uv
+        validation_inputs_data: 
+        - /home/huzq85/2-working/JPEG-AI-OPT/Verification_Models/pytorch_io/encoder/input_encoder_uv
+        validation_outputs_data:
+        - /home/huzq85/2-working/JPEG-AI-OPT/Verification_Models/pytorch_io/encoder/output_encoder_uv
+        validation_threshold: {'GPU': 0.995}
         backend: caffe2
     cl_mem_type: image
     runtime: gpu

@@ -16,7 +16,7 @@ from lothar.commons.common import abi_to_internal
 
 try:
     from lothar.generate_data import generate_input_data
-    # from lothar.validate import validate
+    from lothar.validate import validate
 except Exception as e:
     six.print_("Import error:\n%s" % e, file=sys.stderr)
     exit(1)
@@ -474,6 +474,50 @@ def create_internal_storage_dir(serialno, phone_data_dir):
     sh.adb("-s", serialno, "shell", "mkdir", "-p", internal_storage_dir)
     return internal_storage_dir
 
+def validate_model(abi,
+                   device,
+                   model_file_path,
+                   weight_file_path,
+                   platform,
+                   device_type,
+                   input_nodes,
+                   output_nodes,
+                   input_shapes,
+                   output_shapes,
+                   input_data_formats,
+                   output_data_formats,
+                   model_output_dir,
+                   input_data_types,
+                   input_file_name="model_input",
+                   output_file_name="model_out",
+                   validation_threshold=0.9,
+                   backend="tensorflow",
+                   validation_outputs_data=[],
+                   log_file=""):
+    if not validation_outputs_data:
+        six.print_("* Validate with %s" % platform)
+    else:
+        six.print_("* Validate with file: %s" % validation_outputs_data)
+    if abi != "host":
+        for output_name in output_nodes:
+            formatted_name = common.formatted_file_name(
+                output_file_name, output_name)
+            if os.path.exists("%s/%s" % (model_output_dir,
+                                         formatted_name)):
+                sh.rm("-rf", "%s/%s" % (model_output_dir, formatted_name))
+            device.pull_from_data_dir(formatted_name, model_output_dir)
+
+    if platform == "tensorflow" or platform == "onnx":
+        validate(platform, model_file_path, "",
+                 "%s/%s" % (model_output_dir, input_file_name),
+                 "%s/%s" % (model_output_dir, output_file_name), device_type,
+                 ":".join(input_shapes), ":".join(output_shapes),
+                 ",".join(input_data_formats), ",".join(output_data_formats),
+                 ",".join(input_nodes), ",".join(output_nodes),
+                 validation_threshold, ",".join(input_data_types), backend,
+                 validation_outputs_data,
+                 log_file)
+    six.print_("Validation done!\n")
 
 ################################
 # benchmark

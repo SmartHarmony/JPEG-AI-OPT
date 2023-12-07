@@ -6,7 +6,6 @@ ipdb
 termcolor 
 onnxruntime 
 absl-py 
-sh 
 future  
 filelock
 sh==1.14.3
