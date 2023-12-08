@@ -88,7 +88,7 @@ def compare_output(platform, device_type, output_name, deepvan_out_value,
     max_abs_y=0
     if deepvan_out_value.size != 0:
         pixel_accuracy = calculate_pixel_accuracy(out_value, deepvan_out_value)
-        print(f'Pixel Accuracy = {pixel_accuracy}')
+        # print(f'Pixel Accuracy = {pixel_accuracy}')
         if pixel_accuracy < 1 or len(out_value.shape) <= 2:
             # check more when pixel_accuracy is less than a threshold
             temp_out_value = list(out_value.flat)
@@ -101,8 +101,8 @@ def compare_output(platform, device_type, output_name, deepvan_out_value,
                     max_abs_diff = abs(y-x)
                     max_abs_x = x
                     max_abs_y = y
-            if max_abs_diff != 0:
-                print(f'Max diff = {max_abs_diff}, deepvan_out = {max_abs_y}, out = {max_abs_x}')
+            # if max_abs_diff != 0:
+            #     print(f'Max diff = {max_abs_diff}, deepvan_out = {max_abs_y}, out = {max_abs_x}')
 
             total_count = len(temp_deepvan_out_value)
             common.DLogger.summary(common.StringFormatter.block(
