@@ -53,6 +53,16 @@ Table 1 provides performance comparisons of decoder models between our inference
 
 **Table 1. DECODER Performance Comparisons**
 
+Table 2 provides performance comparisons of the encoder model (single_encoder_y) between our inference framework and others under different input sizes. The testing configurations are the same as we mentioned above:
+
+| Input Sizes | NNAPI w/ONNX (ms) | JAIOPT (ms) | Speedup over ORT |
+|-------------|-------------------|-------------|------------------|
+| 224x224     | 1709.91           | 40.222      | 42.51x           |
+| 512x512     | 8847.9            | 198.634     | 44.54x           |
+| 1024x1024   | 34690.5           | 1437.830    | 24.13x           |
+
+**Table 2. single_encoder_y Performance Comparisons**
+
 ## Result Verification
 We conducted a comparison between the computed results of the exported (ONNX) models and the original PyTorch version on a pixel level, setting tolerance thresholds ranging from `0.5%` to `1%`. The results indicate that the exported ONNX models consistently yield accurate results when compared to the PyTorch version.
 
